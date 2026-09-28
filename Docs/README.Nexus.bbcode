@@ -3,7 +3,7 @@
 
 An [url=https://www.nexusmods.com/valheim/mods/170]AnyPortal[/url] revamp.
 
-[img]https://raw.githubusercontent.com/Vapok/XPortalNetworks/main/images/controller.gif[/img]
+[img]https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/main/images/controller.gif[/img]
 
 
 [size=6][b][color=#FFA03C]Description[/color][/b][/size]
@@ -34,6 +34,12 @@ Forgot where you put your portal? You don't need to teleport to it to find out. 
 
 If you prefer to play without a map, this button can be hidden, either by using the [font=Courier New][b]'nomap'[/b][/font] global key, or by setting [font=Courier New][b]'PingMapDisabled'[/b][/font] to [font=Courier New][b]'True'[/b][/font].
 
+[size=3][b][color=#FFA03C]Portals on your map[/color][/b][/size]
+
+XPortalNetworks can pin every portal you are allowed to use onto your own map - this is the functionality of the standalone [url=https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins]XPortal Shared Map Pins[/url] mod, built right in. Portals on the Global network, portals on tribe networks you are a member of, and your own private portals are pinned automatically; other players' private portals and restricted networks are not, so the map never reveals portals you cannot use.
+
+The pins are local to your client - nothing is written to the world and nothing is sent to other players - and they follow renamed, moved and destroyed portals. Use [font=Courier New][b]'Show Portal Map Pins'[/b][/font] to turn them off, and [font=Courier New][b]'Show Network In Pin Name'[/b][/font] to prefix each pin with the network it belongs to (for example "[Trade Hub] North Base").
+
 [size=3][b][color=#FFA03C]Multiplayer[/color][/b][/size]
 
 XPortalNetworks has been built with multiplayer support at its core. All players must run the same version of XPortalNetworks. If you play on a dedicated server, that too needs to have same version of XPortalNetworks installed.
@@ -63,6 +69,7 @@ XPortalNetworks has been made fully compatible with the following mods:
 [*][url=https://www.nexusmods.com/valheim/mods/847]VHVR - Valheim VR[/url] by Flatscreen to VR Modders
 [*][url=https://www.nexusmods.com/valheim/mods/2007]Stone Portal[/url] by Jere Kuusela
 [*][url=https://www.nexusmods.com/valheim/mods/2187]Advanced Portals[/url] by Randy Knapp
+[*][url=https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins]XPortal Shared Map Pins[/url] by buldosik (built in since v2.6.0 - remove the standalone mod to avoid duplicate map pins)
 [/list]
 Furthermore, XPortalNetworks has a configuration option to fully integrate with [url=https://www.nexusmods.com/valheim/mods/2187]Advanced Portals[/url]. If you set [font=Courier New][b]'DisplayPortalColour'[/b][/font] to [font=Courier New][b]'True'[/b][/font], each portal in XPortalNetworks's dropdown list will be prepended by a ">>" tag that has the same colour as the light that the portal emits. As of v1.2.10, Stone Portals also get their own colour!
 
@@ -124,6 +131,14 @@ If enabled, displays the mod overview and links splash screen on game startup.
 
 If enabled, sends anonymous mod launch and heartbeat telemetry to help improve mod stability and track active versions.
 
+[font=Courier New][b]'Show Portal Map Pins'[/b][/font]
+
+If enabled (the default), the portals you are allowed to use are shown as pins on your own map. Only portals on networks you can access, plus your own private portals, are pinned - other players' private portals never are. This is a local preference, and no portal pins are shown at all while the server has [font=Courier New][b]'PingMapDisabled'[/b][/font] enabled.
+
+[font=Courier New][b]'Show Network In Pin Name'[/b][/font]
+
+If enabled, the map pin of a portal is prefixed with the name of the portal network it is on, for example "[font=Courier New][b]'[Trade Hub] North Base'[/b][/font]". This is a local preference.
+
 
 [size=6][b][color=#FFA03C]Installation instructions[/color][/b][/size]
 
@@ -135,7 +150,7 @@ I very strongly recommend using a mod manager such as [url=https://www.nexusmods
 [list=1]
 [*]Make sure you have [url=https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/]BepInEx[/url] installed.
 [*]Install [url=https://www.nexusmods.com/valheim/mods/1138]Jotunn[/url].
-[*]On [url=https://www.nexusmods.com/valheim/mods/3719]Nexus Mods[/url] click 'Mod manager download', or on [url=https://valheim.thunderstore.io/package/Vapok/XPortalNetworks/]Thunderstore[/url] click 'Install with Mod Manager'.
+[*]On [url=https://www.nexusmods.com/valheim/mods/3719]Nexus Mods[/url] click 'Mod manager download', or on [url=https://valheim.thunderstore.io/package/NorCal_Nerds/XPortalNetworksTribesPins/]Thunderstore[/url] click 'Install with Mod Manager'.
 [/list]
 
 To install XPortalNetworks on a dedicated server, copy all of the contents of the [font=Courier New][b]'plugins\'[/b][/font] directory found inside the .zip file download to the  [font=Courier New][b]'Valheim\BepInEx\plugins\'[/b][/font] directory on your server. 
@@ -147,13 +162,13 @@ First of all, before you report a bug, please make sure that the problem you are
 
 It is important to me that I can make XPortalNetworks as bug-free as possible, but [b]please bear in mind that without your [font=Courier New][b]'LogOutput.log'[/b][/font], I will not be able to debug your issue at all[/b]. Just showing me a screenshot of an error is not enough for me to discover the cause of that error.
 
-[size=4][b]If you have issues or feedback, please use XPortalNetworks's [url=https://github.com/Vapok/XPortalNetworks]GitHub page[/url].[/b][/size]
+[size=4][b]If you have issues or feedback, please use XPortalNetworks's [url=https://github.com/ghstwhl/XPortalNetworksTribesPins]GitHub page[/url].[/b][/size]
 
-To report a bug, please navigate to the [url=https://github.com/Vapok/XPortalNetworks/issues]Issues page[/url], click [url=https://github.com/Vapok/XPortalNetworks/issues/new/choose]New issue[/url], choose [font=Courier New][b]'Bug report'[/b][/font], and fill out the template.
+To report a bug, please navigate to the [url=https://github.com/ghstwhl/XPortalNetworksTribesPins/issues]Issues page[/url], click [url=https://github.com/ghstwhl/XPortalNetworksTribesPins/issues/new/choose]New issue[/url], choose [font=Courier New][b]'Bug report'[/b][/font], and fill out the template.
 
-For feature requests, choose [font=Courier New][b]'Feature request'[/b][/font] on the [url=https://github.com/Vapok/XPortalNetworks/issues/new/choose]New issue[/url] page.
+For feature requests, choose [font=Courier New][b]'Feature request'[/b][/font] on the [url=https://github.com/ghstwhl/XPortalNetworksTribesPins/issues/new/choose]New issue[/url] page.
 
-To add a translation to XPortalNetworks, choose [font=Courier New][b]'Translation'[/b][/font] when submitting a [url=https://github.com/Vapok/XPortalNetworks/issues/new/choose]New issue[/url].
+To add a translation to XPortalNetworks, choose [font=Courier New][b]'Translation'[/b][/font] when submitting a [url=https://github.com/ghstwhl/XPortalNetworksTribesPins/issues/new/choose]New issue[/url].
 
 
 [size=6][b][color=#FFA03C]Credits[/color][/b][/size]

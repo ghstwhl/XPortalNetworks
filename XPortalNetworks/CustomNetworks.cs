@@ -32,7 +32,7 @@ namespace XPortalNetworks
         private static readonly UTF8Encoding Utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
 
         /// <summary>
-        /// A configured portal network (id 1–15) together with its optional team allow list.
+        /// A configured portal network (id 1–15) together with its optional tribe allow list.
         /// When <see cref="AllowList"/> is empty the network is open to everyone.
         /// </summary>
         internal sealed class PortalNetworkDefinition

@@ -45,3 +45,11 @@ If enabled, displays the mod overview and links splash screen on game startup.
 <#= mf.Code("Enable Anonymous Telemetry") #>
 
 If enabled, sends anonymous mod launch and heartbeat telemetry to help improve mod stability and track active versions.
+
+<#= mf.Code("Show Portal Map Pins") #>
+
+If enabled (the default), the portals you are allowed to use are shown as pins on your own map. Only portals on networks you can access, plus your own private portals, are pinned - other players' private portals never are. This is a local preference, and no portal pins are shown at all while the server has <#= mf.Code("PingMapDisabled") #> enabled.
+
+<#= mf.Code("Show Network In Pin Name") #>
+
+If enabled, the map pin of a portal is prefixed with the name of the portal network it is on, for example "`[Trade Hub] North Base`". This is a local preference.

@@ -4,9 +4,9 @@ External sources used while developing, fixing and documenting **XPortalNetworks
 BepInEx mod). Everything listed is a third-party artifact or publication; none of it is
 distributed with this repository.
 
-- **Mod version at time of writing:** 2.3.0
+- **Mod version at time of writing:** 2.6.0
 - **Game:** Valheim 1.0.16 — Unity **6000.0.75f1** (`UnityPlayer.dll` reports `6000.0.75.2503836`)
-- **Last updated:** 2026-09-28
+- **Last updated:** 2026-09-29
 
 Paths below are the ones used on the development machine; the repository expects the same
 layout under `$(ReferencesRoot)` (`.references/`) — see [`.references/README.md`](.references/README.md).
@@ -29,11 +29,31 @@ layout under `$(ReferencesRoot)` (`.references/`) — see [`.references/README.m
 
 | Source | Version | Where it comes from | Used for |
 |---|---|---|---|
-| **BepInEx** — <https://github.com/BepInEx/BepInEx> | 5.4.2350 (`BepInEx.dll`, `BepInEx.Harmony.dll`) | `denikson-BepInExPack_Valheim-5.4.2350` (Thunderstore); `.references/BepInEx/5.4.2350/BepInEx/core/` | Plugin/base framework, `ConfigFile`/`ConfigEntry`/`ConfigDescription`, config reload + `SettingChanged` events |
+| **BepInEx 5 LTS** — the build Valheim uses, and the one this mod compiles against: <https://github.com/AzumattDev/BepInEx> (branch **`v5-lts`**, maintained by Azumatt) | pack **5.4.2350** = assembly **5.4.23.5** (`BepInEx.dll`, `BepInEx.Harmony.dll`; built from commit `ef506e0a`, *"Bump ThunderStore version to 5.4.2350"*) | `denikson-BepInExPack_Valheim-5.4.2350` (Thunderstore); `.references/BepInEx/5.4.2350/BepInEx/core/` | Plugin/base framework, `ConfigFile`/`ConfigEntry`/`ConfigDescription`, config reload + `SettingChanged` events |
+| **BepInEx** (upstream 5.x line) — <https://github.com/BepInEx/BepInEx> | 5.4.x (EOL) | Cite reference only | Historical/API reference; **not** the source of the pack we build against — see the note below this table |
 | **HarmonyX** — <https://github.com/BepInEx/HarmonyX> | 2.9.0 (`0Harmony.dll`) | BepInEx pack / `packages.config` reference | All runtime patches (`Patches/*`) |
 | **Jötunn (Jotunn)** — <https://github.com/ValheimModding/Jotunn> | 2.30.2 | NuGet package `JotunnLib` 2.30.2 (`packages.config`); <https://www.nuget.org/packages/JotunnLib> | Mod-framework helpers; **`Jotunn.Managers.SynchronizationManager`** (ServerSync), `SynchronizationModeAttribute` + `AdminOnlyStrictness`, `NetworkCompatibility`, `GUIManager.IsHeadless()`, `MinimapManager`, `ConfigEntryBaseExtension` |
 | **Vapok.Valheim.Common** — <https://github.com/Vapok/Vapok.Common> | NuGet 3.21.1015 (assembly 2.11.2214.0) | NuGet; <https://www.nuget.org/packages/Vapok.Valheim.Common> | `ModSplashManager`/`ModSplashDossier`, `TelemetryManager`, logging, `Vapok.Common.Shared.ConfigurationManagerAttributes`. Internalized into the shipped DLL by ILRepack |
 | **Official BepInEx ConfigurationManager** — <https://github.com/BepInEx/BepInEx.ConfigurationManager> | source @ `master`, read 2026-09-28 | Cite reference only | The in-game config UI. Resolves an attributes class **by type name** (not assembly identity); its own `internal sealed` class defines `Order`, `ReadOnly`, `IsAdvanced`, `Browsable`, `Category`, `CustomDrawer`, `CustomHotkeyDrawer`, `DispName`, `Description`, `HideDefaultButton`, `HideSettingName`, `DefaultValue`, `ShowRangeAsPercent`, `ObjToStr`, `StrToObj` — and **no** admin concept |
+
+### Which BepInEx build this mod compiles against
+
+Valheim's BepInEx is **not** built from <https://github.com/BepInEx/BepInEx> (that 5.x line is EOL). The
+`denikson-BepInExPack_Valheim` pack ships a maintenance build from
+**<https://github.com/AzumattDev/BepInEx>** — branch **`v5-lts`** (a second branch, `TSChanges`, carries the
+Thunderstore packaging). Verified 2026-09-29:
+
+- `Directory.Build.props` on `v5-lts` declares `<BepInExVersionPrefix>5.4.23.5</BepInExVersionPrefix>`.
+- The pack names that same build **`5.4.2350`**, and the `BepInEx.dll` in
+  `.references/BepInEx/5.4.2350/BepInEx/core/` reports file/product version
+  `5.4.23.5+ef506e0a6bb98c49d85b7927b5ab625605826be0`.
+- That commit (`ef506e0a`) resolves **only** in `AzumattDev/BepInEx` — its message is literally
+  *"Bump ThunderStore version to 5.4.2350"* — and does not exist upstream
+  (`GET /repos/BepInEx/BepInEx/commits/ef506e0a…` → HTTP 422).
+- The fork's `BepInEx.csproj` pins `HarmonyX` **2.9.0**, matching the `0Harmony.dll` 2.9.0 listed above.
+
+So <https://github.com/AzumattDev/BepInEx> (branch `v5-lts`) is the exact upstream source of the framework
+this mod is compiled and shipped against.
 
 ### Notes on the ConfigurationManager / ServerSync behaviour
 
@@ -133,8 +153,9 @@ packaging rules followed here:
 | **Stone Portal** | Integration described alongside `DisplayPortalColour` |
 | **AnyPortal** | Declared incompatible via `[BepInIncompatibility("com.sweetgiorni.anyportal")]` |
 | **ValheimCommunityPatch** (MidnightMods) | Compatibility notice in `CHANGELOG.md` (<https://thunderstore.io/c/valheim/p/MidnightMods/ValheimCommunityPatch/>) |
+| **XPortal Shared Map Pins** (buldosik) — <https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins> | Source of the 2.6.0 portal map-pin feature (read 2026-09-29). The standalone companion mod (built against XPortalNetworks 2.0.8, GUID `buldosik.XPortalSharedMapPins`, hard dependency `vapok.mods.xportalnetworks`) was re-implemented as [`PortalMapPins.cs`](XPortalNetworks/PortalMapPins.cs) — so it must **not** be installed alongside 2.6.0+, or the map gets duplicate pins |
 | **Nexus Mods** — Nexus ID 3719 / Nexus Update Check | `Mod.Info.NexusId`, `General/NexusID` config key (<https://www.nexusmods.com/valheim/mods/102>) |
-| **Thunderstore / BepInExPack_Valheim** | Distribution target + BepInEx core source (`denikson-BepInExPack_Valheim`) |
+| **Thunderstore / BepInExPack_Valheim** | Distribution target; BepInEx core source — the pack `denikson-BepInExPack_Valheim-5.4.2350` is built from the `v5-lts` branch of <https://github.com/AzumattDev/BepInEx> (see §2) |
 
 ## 7. Source-availability notes
 
@@ -163,11 +184,34 @@ Recorded for transparency about where each fact came from:
   (`SynchronizeChangedConfig` → `CustomRPC.SendPackage(ZRoutedRpc.GetServerPeerID(), …)`) and the
   server logs *"Received configuration data from client {0}"*; the push is triggered by the
   ConfigurationManager **window being closed** and by `Config_ConfigReloaded`.
+- The **XPortal Shared Map Pins** source and the **BepInEx** provenance in §2 were fetched with shell
+  `Invoke-WebRequest`/`Invoke-RestMethod` against `raw.githubusercontent.com` and `api.github.com`, because
+  the local `mcp/fetch` server refuses GitHub `tree`/`blob` pages (robots.txt) and the GitHub-hosted
+  search/index tools return empty results (see above). The Brave-backed web-search MCP server was
+  unavailable for this session (`SUBSCRIPTION_TOKEN_INVALID`), so nothing here came from a search result.
+- The Valheim **map-pin API** used by the 2.6.0 feature — the `Minimap.AddPin`/`RemovePin` signatures,
+  `AddPin`'s silent `Icon3` fallback for out-of-range types, its sprite lookup via
+  `m_icons.Find(entry => entry.m_name == type)` (and that `Minimap.SpriteData.m_icon` sprites are looked up
+  by `Sprite.name`, which is how the game's portal icon is found),
+  `m_pins`/`m_icons`/`m_visibleIconTypes`, `Minimap.PinType` (values 0–17, no portal pin type),
+  `PinData`/`SpriteData`, and the fact that `Minimap.UpdatePins` re-assigns every marker's
+  `m_iconElement.color` on each of its passes — was verified by Mono.Cecil against
+  `.references/Valheim/1.0.16/assembly_valheim_publicized.dll`, not read from a web source.
 
 ## 8. Attribution and licensing
 
 - **Valheim** and its assemblies are © Iron Gate Studio AB / Coffee Stain Publishing. They are
   used here as compile-time references only and are not redistributed.
+- **XPortal Networks** by **Vapok** — <https://github.com/Vapok/XPortalNetworks> — is the base this
+  project is built upon and continues (GPL-3.0). The plugin `GUID`, the plugin `Name` and the portal ZDO
+  keys are deliberately kept identical to it, so existing worlds and configurations stay compatible. This
+  project's own home is <https://github.com/ghstwhl/XPortalNetworksTribesPins>.
+- **XPortal Shared Map Pins** by **buldosik** —
+  <https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins> — is the origin of the map-pin
+  feature added in 2.6.0. That repository declares **no licence** (GitHub reports none, and there is no
+  `LICENSE` file), so the origin is credited explicitly here: the behaviour was re-implemented inside this
+  mod against the vanilla `Minimap` API and this mod's own permission model, instead of the standalone
+  mod's reflection adapter.
 - **BepInEx**, **HarmonyX**, **Jötunn**, **Vapok.Valheim.Common**, **ILRepack**, **Mono.Cecil** and
   **AssemblyPublicizer** each remain under their own upstream licences; see the respective links
   in §2 and §3 for terms.

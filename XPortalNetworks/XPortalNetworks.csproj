@@ -22,6 +22,9 @@
         <BEPINEX_PATH>$(ReferencesRoot)\BepInEx\5.4.2350\BepInEx</BEPINEX_PATH>
         <ReleaseRoot>/home/vapok/Modding/Releases</ReleaseRoot>
         <ModRoot>/home/vapok/Modding/Valheim</ModRoot>
+        <!-- Package staging folder name. tools/Build.ps1 overrides this from ModInfo.cs
+             (ThunderstoreTeam-ThunderstorePackage), so the folder mirrors the published package. -->
+        <PackageFolder Condition="'$(PackageFolder)' == ''">$(AssemblyName)-Vapok</PackageFolder>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -118,8 +121,10 @@
         <Compile Include="Patches\ZNet.cs" />
         <Compile Include="RPC\XPortalNetworksAdminSync.cs" />
         <Compile Include="PortalNetwork.cs" />
+        <Compile Include="PortalMapPins.cs" />
         <Compile Include="Patches\Dropdown.cs" />
         <Compile Include="Patches\Game.cs" />
+        <Compile Include="Patches\Minimap.cs" />
         <Compile Include="Patches\Piece.cs" />
         <Compile Include="Patches\TeleportWorld.cs" />
         <Compile Include="Patches\TextInput.cs" />
@@ -181,17 +186,17 @@
         <ItemGroup>
             <DevTranslationFiles Include="$(MSBuildProjectDirectory)/Translations/**/*.*" />
         </ItemGroup>
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DevPluginsFolder)/Vapok-$(ProjectName)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(DevTranslationFiles)" DestinationFiles="@(DevTranslationFiles->'$(DevPluginsFolder)/Vapok-$(ProjectName)/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DevPluginsFolder)/$(PackageFolder)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(DevTranslationFiles)" DestinationFiles="@(DevTranslationFiles->'$(DevPluginsFolder)/$(PackageFolder)/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     </Target>
     <Target Name="Copy" AfterTargets="ILRepack" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <ItemGroup>
             <TranslationFiles Include="$(MSBuildProjectDirectory)/Translations/**/*.*" />
             <PackageDocs Include="$(ModRoot)/$(ProjectName)/LICENSE.md;$(ModRoot)/$(ProjectName)/manifest.json;$(ModRoot)/$(ProjectName)/CHANGELOG.md;$(ModRoot)/$(ProjectName)/README.md;$(ModRoot)/$(ProjectName)/icon.png" />
         </ItemGroup>
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseRoot)/$(ProjectName)-Vapok/plugins" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(TranslationFiles)" DestinationFiles="@(TranslationFiles->'$(ReleaseRoot)/$(ProjectName)-Vapok/plugins/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(PackageDocs)" DestinationFolder="$(ReleaseRoot)/$(ProjectName)-Vapok" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseRoot)/$(PackageFolder)/plugins" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(TranslationFiles)" DestinationFiles="@(TranslationFiles->'$(ReleaseRoot)/$(PackageFolder)/plugins/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(PackageDocs)" DestinationFolder="$(ReleaseRoot)/$(PackageFolder)" SkipUnchangedFiles="true" />
     </Target>
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
         <PropertyGroup>

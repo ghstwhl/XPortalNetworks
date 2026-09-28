@@ -57,6 +57,12 @@ namespace XPortalNetworks
 
             public ConfigEntry<bool> ShowSplashOnStartup;
             public ConfigEntry<bool> EnableTelemetry;
+
+            /// <summary>Local (not synchronized) preference: pin the portals the player may use on the map.</summary>
+            public ConfigEntry<bool> ShowPortalPins;
+
+            /// <summary>Local (not synchronized) preference: prefix pin names with the portal network's name.</summary>
+            public ConfigEntry<bool> ShowNetworkInPinName;
         }
 
         /// <summary>
@@ -199,6 +205,20 @@ namespace XPortalNetworks
                 true,
                 new ConfigDescription("If enabled, sends anonymous mod launch and heartbeat telemetry to help improve mod stability and track active versions.",
                     null, new Vapok.Common.Shared.ConfigurationManagerAttributes { Order = 4 }));
+
+            Local.ShowPortalPins = configFile.Bind(
+                "Local Config",
+                "Show Portal Map Pins",
+                true,
+                new ConfigDescription("If enabled, the portals you are allowed to use are shown as pins on your own map. Only portals on networks you can access, plus your own private portals, are pinned - other players' private portals never are. This is a local preference; no portal pins are shown while the server has PingMapDisabled enabled.",
+                    null, new Vapok.Common.Shared.ConfigurationManagerAttributes { Order = 3 }));
+
+            Local.ShowNetworkInPinName = configFile.Bind(
+                "Local Config",
+                "Show Network In Pin Name",
+                false,
+                new ConfigDescription("If enabled, the map pin of a portal is prefixed with the name of the portal network it is on, for example \"[Trade Hub] North Base\". This is a local preference.",
+                    null, new Vapok.Common.Shared.ConfigurationManagerAttributes { Order = 2 }));
         }
 
         /// <summary>

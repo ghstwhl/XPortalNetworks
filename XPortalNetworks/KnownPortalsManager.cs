@@ -115,12 +115,20 @@ namespace XPortalNetworks
                 knownPortals[portal.Id] = portal;
             }
 
+            PortalMapPins.MarkDirty();
+
             return knownPortals[portal.Id];
         }
 
         public bool Remove(ZDOID id)
         {
-            return knownPortals.Remove(id);
+            var removed = knownPortals.Remove(id);
+            if (removed)
+            {
+                PortalMapPins.MarkDirty();
+            }
+
+            return removed;
         }
 
         public bool Remove(KnownPortal portal)
@@ -239,6 +247,7 @@ namespace XPortalNetworks
         public void Reset()
         {
             knownPortals.Clear();
+            PortalMapPins.MarkDirty();
         }
 
         public void Dispose()

@@ -10,7 +10,7 @@
 	var thisModName = Mod.Info.Name;
 	var thisModVersion = Mod.Info.Version;
 	var thisModNexusId = Mod.Info.NexusId;
-	var thisModPackageName = $"{Mod.Info.Author}/{Mod.Info.Name}";
+	var thisModPackageName = $"{Mod.Info.ThunderstoreTeam}/{Mod.Info.ThunderstorePackage}";
 	var thisModGitHubRepo = Mod.Info.GitHubRepo;
 	var thisModGUID = Mod.Info.GUID;
 	

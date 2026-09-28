@@ -74,6 +74,7 @@ namespace XPortalNetworks
         private void Update()
         {
             QueuedAction.Update();
+            PortalMapPins.Tick();
 
             if (Environment.IsHeadless || !Environment.GameStarted || ZInput.instance == null || !PortalConfigurationPanel.Instance.IsActive())
             {
@@ -89,6 +90,8 @@ namespace XPortalNetworks
         {
             Log.Debug("Full portal list:");
             KnownPortalsManager.Instance.ReportAllPortals();
+
+            PortalMapPins.Reset();
 
             if (!Environment.IsHeadless)
             {
@@ -191,6 +194,9 @@ namespace XPortalNetworks
         #region Config events
         private static void OnNetworksListChanged()
         {
+            // Network membership decides which portals are pinned.
+            PortalMapPins.MarkDirty();
+
             if (!Environment.IsHeadless)
             {
                 PortalConfigurationPanel.Instance.OnNetworksListChanged();
@@ -202,6 +208,9 @@ namespace XPortalNetworks
             // Server-owned settings are synchronized into our config file by Jotunn's ServerSync,
             // so a change to them surfaces here like any other config change.
             UpdatePortalRecipe();
+
+            // Covers PingMapDisabled, AdminsSeeAllNetworks and the local pin toggles.
+            PortalMapPins.MarkDirty();
         }
         #endregion
 
@@ -212,6 +221,7 @@ namespace XPortalNetworks
             KnownPortalsManager.Instance.Reset();
             XPortalNetworksAdminSync.ResetForNewSession();
             CustomNetworks.ResetSession();
+            PortalMapPins.Reset();
             RPCManager.Register();
             if (Environment.IsServer)
             {
@@ -286,7 +296,7 @@ namespace XPortalNetworks
             Piece piece = teleportWorld.GetComponent<Piece>();
             bool mayEditNetworkAsAdmin = XPortalNetworksAdminSync.IsLocalPortalNetworkAdmin();
 
-            // A portal on a team network this player can't access (not a member, and admin
+            // A portal on a tribe network this player can't access (not a member, and admin
             // bypass disabled) must not be viewable or editable through the configuration panel.
             // IsLocalPlayerAllowed already accounts for the gated admin bypass.
             if (!CustomNetworks.IsLocalPlayerAllowed(portal.NetworkOwnerPlayerId))
@@ -409,7 +419,7 @@ namespace XPortalNetworks
 
         /// <summary>
         /// True when the player may not use the given portal because it (or its destination) sits on a
-        /// team network the player is not a member of. Privileged players bypass this restriction.
+        /// tribe network the player is not a member of. Privileged players bypass this restriction.
         /// </summary>
         internal static bool NetworkUseBlocked(ZDOID sourcePortalId, long playerId)
         {

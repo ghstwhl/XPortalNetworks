@@ -134,7 +134,7 @@ namespace XPortalNetworks.RPC.Server
             var requestedNetworkRestricted = CustomNetworks.IsReservedIdRange(portal.NetworkOwnerPlayerId)
                 && !CustomNetworks.IsPlayerAllowed(portal.NetworkOwnerPlayerId, requesterUserId, requesterPlayerIdString, requesterBypassesNetworks);
 
-            // Team networks ("allow_list") are server-authoritative: a player who is not on the network's
+            // Tribe networks ("allow_list") are server-authoritative: a player who is not on the network's
             // allow list may not view, edit, or move portals on that network.
             if (!requesterBypassesNetworks && existing != null && currentNetworkRestricted)
             {
@@ -178,7 +178,7 @@ namespace XPortalNetworks.RPC.Server
                 }
             }
 
-            // Do not allow linking to a portal that sits on a team network the requester cannot access.
+            // Do not allow linking to a portal that sits on a tribe network the requester cannot access.
             if (portal.HasTarget()
                 && !requesterBypassesNetworks
                 && KnownPortalsManager.Instance.TryGetValue(portal.Target, out var destNetworkValidation)

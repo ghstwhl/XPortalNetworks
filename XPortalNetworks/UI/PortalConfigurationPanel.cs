@@ -1021,7 +1021,7 @@ namespace XPortalNetworks.UI
                     continue;
                 }
 
-                // Team networks the local player is not a member of are hidden entirely.
+                // Tribe networks the local player is not a member of are hidden entirely.
                 if (CustomNetworks.IsReservedIdRange(p.NetworkOwnerPlayerId) && !CustomNetworks.IsLocalPlayerAllowed(p.NetworkOwnerPlayerId))
                 {
                     continue;

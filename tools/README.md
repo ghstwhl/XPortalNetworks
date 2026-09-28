@@ -29,7 +29,9 @@ powershell -ExecutionPolicy Bypass -File .\tools\Build.ps1 -SkipRestore -SkipVal
    - any `Translations\**\*.json` file is invalid JSON, or
    - the reference assemblies aren't present at `-ReferencesRoot` (default `<repo>\.references`).
 3. **Build** — MSBuild; `ILRepack` internalizes `Vapok.Valheim.Common` into a single DLL.
-4. **Package** (Release) — assembles the Thunderstore-style folder and a zip.
+4. **Package** (Release) — assembles the Thunderstore-style folder and two identical zips:
+   `XPortalNetworks-release.zip` (the stable "latest" name) and `XPortalNetworks-<version>.zip`
+   (a copy named after the version being built).
 
 ### Parameters
 
@@ -39,14 +41,15 @@ powershell -ExecutionPolicy Bypass -File .\tools\Build.ps1 -SkipRestore -SkipVal
 | `-ReferencesRoot` | `<repo>\.references` | Folder with the publicized reference assemblies. |
 | `-SkipRestore` | off | Skip the NuGet restore step. |
 | `-SkipValidation` | off | Skip the validation checks. |
-| `-NoPackage` | off | Build the release folder but don't create the zip. |
+| `-NoPackage` | off | Build the release folder but don't create the zips. |
 
 ### Outputs
 
 ```
-XPortalNetworks\bin\<Configuration>\XPortalNetworks.dll   single, ILRepack-merged DLL
-Release\XPortalNetworks-Vapok\                            package (plugins\ + docs)
-Release\XPortalNetworks-release.zip                       Release only
+XPortalNetworks\bin\<Configuration>\XPortalNetworks.dll       single, ILRepack-merged DLL
+Release\NorCal_Nerds-XPortalNetworksTribesPins\               package (plugins\ + docs), named from ModInfo.cs
+Release\XPortalNetworks-release.zip                           Release only
+Release\XPortalNetworks-<version>.zip                         Release only (copy of the above)
 ```
 
 Deploy the package's `plugins` contents to `BepInEx\plugins\` on **both** the server and the

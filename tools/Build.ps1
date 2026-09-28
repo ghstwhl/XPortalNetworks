@@ -11,7 +11,8 @@
            - every translation JSON file parses,
            - the local reference assemblies exist.
       3. Builds the project with MSBuild (ILRepack internalizes Vapok.Valheim.Common).
-      4. For Release, assembles the Thunderstore-style package and a zip.
+      4. For Release, assembles the Thunderstore-style package and two identical zips:
+         XPortalNetworks-release.zip and XPortalNetworks-<version>.zip.
 
     The mod DLL is byte-identical on the server and the client, so a single build is
     deployable to both. (Portal networks live in the BepInEx config, not in a separate file.)
@@ -75,7 +76,10 @@ $PackagesDir      = Join-Path $RepoRoot 'packages'
 $CacheDir         = Join-Path $PSScriptRoot '.cache'
 $NuGetExe         = Join-Path $CacheDir 'nuget.exe'
 $ReleaseDir       = Join-Path $RepoRoot 'Release'
-$PackageRoot      = Join-Path $ReleaseDir 'XPortalNetworks-Vapok'
+# Set from ModInfo.cs in the try block below (ThunderstoreTeam-ThunderstorePackage), so the staging
+# folder mirrors the published package; it is also handed to MSBuild as /p:PackageFolder so the csproj's
+# copy target agrees. Expect e.g. Release\NorCal_Nerds-XPortalNetworksTribesPins.
+$PackageRoot      = $null
 $ZipPath          = Join-Path $ReleaseDir 'XPortalNetworks-release.zip'
 $OutputDll        = Join-Path $RepoRoot "XPortalNetworks\bin\$Configuration\XPortalNetworks.dll"
 
@@ -121,6 +125,18 @@ function Get-ModVersion {
 
     $match = [regex]::Match((Get-Content $ModInfoPath -Raw), 'Version\s*=\s*"([^"]+)"')
     if (-not $match.Success) { Fail 'Could not read ModInfo.Version.' }
+
+    return $match.Groups[1].Value
+}
+
+function Get-ModString {
+    # Reads a `public const string <Name> = "<value>";` declaration out of ModInfo.cs.
+    param([string]$Name)
+
+    if (-not (Test-Path $ModInfoPath)) { Fail "ModInfo.cs not found at '$ModInfoPath'." }
+
+    $match = [regex]::Match((Get-Content $ModInfoPath -Raw), "public const string $Name\s*=\s*""([^""]*)""")
+    if (-not $match.Success) { Fail "Could not read ModInfo.$Name." }
 
     return $match.Groups[1].Value
 }
@@ -221,6 +237,11 @@ try {
     $version = Get-ModVersion
     Write-Info "Version $version"
 
+    # Thunderstore identity from ModInfo.cs: names the package folder and tells MSBuild where to stage.
+    $packageFolder = "$(Get-ModString 'ThunderstoreTeam')-$(Get-ModString 'ThunderstorePackage')"
+    $PackageRoot = Join-Path $ReleaseDir $packageFolder
+    Write-Info "Package folder $packageFolder"
+
     if (-not $SkipValidation) { Invoke-Validation -Version $version }
 
     $refs = (Resolve-Refs)
@@ -244,6 +265,7 @@ try {
         $ProjectPath
         "/p:Configuration=$Configuration"
         "/p:ReferencesRoot=$refs"
+        "/p:PackageFolder=$packageFolder"
         '/p:DevPluginsFolder=/tmp/xportal-devplugins'   # non-existent -> dev-deploy target skipped
         '/nologo'
         '/v:minimal'
@@ -276,6 +298,14 @@ try {
             Compress-Archive -Path (Join-Path $PackageRoot '*') -DestinationPath $ZipPath -Force
             if (-not (Test-Path $ZipPath)) { Fail 'Failed to create the release zip.' }
             Write-Ok ("Zip: {0} ({1:N0} bytes)" -f $ZipPath, (Get-Item $ZipPath).Length)
+
+            # Second artifact: the same zip under the version being released, so a download can be pinned
+            # to an exact build while XPortalNetworks-release.zip stays the stable "latest" name.
+            $versionedZipPath = Join-Path $ReleaseDir "XPortalNetworks-$version.zip"
+            if (Test-Path $versionedZipPath) { Remove-Item $versionedZipPath -Force }
+            Copy-Item -Path $ZipPath -Destination $versionedZipPath -Force
+            if (-not (Test-Path $versionedZipPath)) { Fail "Failed to create '$versionedZipPath'." }
+            Write-Ok ("Zip: {0} ({1:N0} bytes)" -f $versionedZipPath, (Get-Item $versionedZipPath).Length)
         }
     }
 
