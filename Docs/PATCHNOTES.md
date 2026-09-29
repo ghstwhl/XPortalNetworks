@@ -1,3 +1,14 @@
+# 3.0.2 - Portal Network Docs Correction
+* **Custom network wording fixed (`README.md`, `Docs/SolutionDir/README.md`)**
+  * The "Public, Private & Custom Networks" list still said custom networks were "defined in `xportal_networks.json`". That has not been true since 2.4.0, so both hand-maintained READMEs now describe the current workflow: networks (up to 15) are admin-defined in this mod's own config file and can be added, renamed or restricted on the fly - in-game with tools like ConfigurationManager, or by editing the `[Portal Network <n>]` sections by hand.
+  * The bullet also spells out what `Permitted` is for: it takes the player ids allowed to use that network, which is what restricts a portal network to a specific Tribe or faction on a multiplayer server.
+  * Wording only - no code, config or behaviour change. Historical changelog entries that describe the old JSON file are deliberately left as they are, and the "Custom Named Networks (config)" sections below the list already described the config workflow correctly.
+* **Product name corrected (`README.md`, `Docs/SolutionDir/README.md`, `CHANGELOG.md`)**
+  * Both READMEs wrote the mod's name as "XPortal Networks **Teams** Pins" in their titles, headings and prose, while the plugin name, the manifest, the repository and the Thunderstore package all say **Tribes**: it is now spelled "XPortal Networks Tribes Pins" everywhere, and the historical 2.0.0 entry was corrected the same way.
+  * Typos fixed in the same files: "re-woprk" -> "re-work", "[Valpok]" -> "[Vapok]", "[XPortalNetwork]" -> "[XPortalNetworks]", "private Triibe" -> "private Tribe", "Author of the the expanded" -> "Author of the expanded", and the "Teams Pinss" instances that came with the wrong name.
+* **Stale `README copy.md` references removed (`Docs/PATCHNOTES.md`, `CHANGELOG.md`)**
+  * The 3.0.1 notes described mirroring changes into a `README copy.md` that is not part of the repository; those mentions are gone and the lines now name only the files that exist.
+
 # 3.0.1 - Lime Green Pins & Nexus Reference Removed
 * **Lime green portal pins (`PortalMapPins.cs`)**
   * Portal map pins are now tinted **lime green** (`#32CD32`, i.e. `new Color(0.196f, 0.804f, 0.196f, 1f)`) instead of the bright blue (`0.4, 0.8, 1`) of the standalone XPortal Shared Map Pins mod that inspired them (an inspiration only - no code from that project is used here), so this fork's pins are recognisable at a glance. Nothing else about the pins changes: the same dedicated `Minimap.PinType`, the same marker sprite (the game's own portal map icon, or the generated white ring), the same access rules, and the colour is still re-applied after every `Minimap.UpdatePins` pass because the game re-tints all markers itself.
@@ -9,13 +20,13 @@
   * Nothing breaks: the value was never read by this mod, and BepInEx simply ignores the retired key left behind in an existing config file. The `[General]` section and every other setting are unchanged.
 * **Docs no longer advertise a Nexus listing**
   * `Docs/_Header.t4` drops `thisModNexusId` / `urlThisModNexus` (with a comment saying why, so the URL is not "restored" later), and the modules built on it follow: the `11HeaderGitHub.t4` badge row and the `30Installation.t4` download step now name Thunderstore and the GitHub releases page only.
-  * The tracked generated outputs (`Docs/README.Nexus.bbcode`, `Docs/SolutionDir/Package/Release/README.md`) and the hand-maintained `Docs/SolutionDir/README.md` and `README copy.md` are mirrored to match. `README copy.md` also loses a badge claiming "Nexus Mods - Available", and `Docs/SolutionDir/README.md` was linking to Nexus ID 2239, which is not this project's page at all.
+  * The tracked generated outputs (`Docs/README.Nexus.bbcode`, `Docs/SolutionDir/Package/Release/README.md`) and the hand-maintained `Docs/SolutionDir/README.md` are mirrored to match, and the latter no longer links to Nexus ID 2239, which is not this project's page at all.
   * Third-party Nexus links (Jötunn, Vortex, AnyPortal, Advanced Portals, ...) and the upstream credits are untouched, and `REFERENCES.md` replaces the row that documented the ID with one recording the removal.
 * No portal behaviour or localization changes: the pin colour stays an internal constant rather than a setting, and the only config entry removed was the inert `General/NexusID` metadata key.
 
 * **Attribution clarified (docs, `REFERENCES.md`, `PortalMapPins.cs`, `Patches/Minimap.cs`)**
   * buldosik's [XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins) is now described everywhere as the **inspiration only** for the portal map pins: the implementation is this mod's own re-implementation against the vanilla `Minimap` API and it **contains no code from that project**.
-  * The `PortalMapPins` class comment no longer calls the feature "ported" (it names the standalone mod as the inspiration instead), and the note is repeated wherever that mod is named: the pin-feature sections and the compatibility/credits lists of `README.md`, `README copy.md` and `Docs/SolutionDir/README.md`, the `20Features.t4` template with its tracked generated mirrors (`Docs/README.Nexus.bbcode` and the package README), and `REFERENCES.md` (referenced-mods table, source-availability note and attribution section).
+  * The `PortalMapPins` class comment no longer calls the feature "ported" (it names the standalone mod as the inspiration instead), and the note is repeated wherever that mod is named: the pin-feature sections and the compatibility/credits lists of `README.md` and `Docs/SolutionDir/README.md`, the `20Features.t4` template with its tracked generated mirrors (`Docs/README.Nexus.bbcode` and the package README), and `REFERENCES.md` (referenced-mods table, source-availability note and attribution section).
   * Wording only - no code, config or behaviour change, and buldosik stays credited exactly as before.
 
 # 3.0.0 - Independent Plugin Identity

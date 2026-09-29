@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🌀XPortal Networks Teams Pins
+# 🌀XPortal Networks Tribes Pins
 
-### *This is a re-woprk of [Valpok](https://thunderstore.io/c/valheim/p/Vapok/)'s [XPortalNetwork](https://thunderstore.io/c/valheim/p/Vapok/XPortalNetworks/) with map pin features inspired by [buldosik](https://thunderstore.io/c/valheim/p/buldosik/)'s [XPortalSharedMapPins](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/). This mod combines the features of both while adding support for private Triibe portal networks! Adding a new layer of portal privacy on multiplayer servers!*
+### *This is a re-work of [Vapok](https://thunderstore.io/c/valheim/p/Vapok/)'s [XPortalNetworks](https://thunderstore.io/c/valheim/p/Vapok/XPortalNetworks/) with map pin features inspired by [buldosik](https://thunderstore.io/c/valheim/p/buldosik/)'s [XPortalSharedMapPins](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/). This mod combines the features of both while adding support for private Tribe portal networks! Adding a new layer of portal privacy on multiplayer servers!*
 
 </div>
 
@@ -23,9 +23,9 @@
 
 ---
 
-## What's New in XPortal Networks Teams Pins
+## What's New in XPortal Networks Tribes Pins
 
-XPortal Networks Teams Pins builds upon the solid foundation of the original XPortal mod by SpikeHimself, expanding it into a dedicated networking framework with extensive multiplayer features and numerous bug fixes:
+XPortal Networks Tribes Pins builds upon the solid foundation of the original XPortal mod by SpikeHimself, expanding it into a dedicated networking framework with extensive multiplayer features and numerous bug fixes:
 
 * **Portal Networks**: Group portals into distinct networks:
   * **Global / Public Network**: Accessible to all players on the server.
@@ -54,13 +54,13 @@ Organize your world’s transportation:
 * **Global Network**: The shared network open to everyone.
 * **Personal Network**: Portals automatically grouped under your character.
 * **Private Portals**: Mark sensitive portals as private so other players cannot use or retarget them.
-* **Custom Named Networks**: Admin-defined channels defined in `xportal_networks.json` that organize portals by faction, region, or purpose.
+* **Custom Named Networks**: Admin-defined portal networks (up to 15) that live in this mod's own config file, so they can be added, renamed or restricted on the fly - in-game with tools like ConfigurationManager, or by editing the `[Portal Network <n>]` sections by hand. Each network carries a `Permitted` list of the player ids allowed to use it, which is how a portal network is restricted to a specific Tribe or faction on a multiplayer server.
 
 ### ⭐ Default Portal Destination
 You can set a portal as your **Default Portal**. Newly constructed portals will immediately link to your default portal automatically, saving you time when setting up forward operating bases.
 
 ### 🏷️ Uncapped Portal Name Length
-XPortal Networks Teams Pins removes the vanilla character limit on portal tags, allowing you to give your portals descriptive and memorable names.
+XPortal Networks Tribes Pins removes the vanilla character limit on portal tags, allowing you to give your portals descriptive and memorable names.
 
 ### 📍 Ping Portal on Map
 Forgot where a portal leads? Click the **Ping** button to highlight the destination portal directly on your map and alert your fellow adventurers with a map ping.
@@ -97,7 +97,7 @@ Fully navigable using controllers with integrated on-screen key hints:
 * **[Nexus Update Check](https://valheim.thunderstore.io/package/nexusreupload/aedenthorn_Nexus_Update_Check/)**: Compatible.
 * **[XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins)**: Inspiration for this mod's portal map pins (no code from that project is used here), built in as of v2.6.0 — remove the standalone mod, or you will see duplicate map pins.
 
-*Note: Incompatible with AnyPortal (XPortal Networks Teams Pins replaces and supersedes AnyPortal functionality).*
+*Note: Incompatible with AnyPortal (XPortal Networks Tribes Pins replaces and supersedes AnyPortal functionality).*
 
 ---
 
@@ -161,12 +161,12 @@ These entries are server-owned and synchronized by Jotunn's ServerSync, so **ser
 * **[Jötunn (ValheimLib)](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)** (v2.20.0+)
 
 ### Automatic (Recommended)
-Use a mod manager like **Gale** or **Thunderstore Mod Manager** to download and install XPortal Networks Teams Pins with one click.
+Use a mod manager like **Gale** or **Thunderstore Mod Manager** to download and install XPortal Networks Tribes Pins with one click.
 
 ### Manual Installation
 1. Download the latest release `.zip` from Thunderstore or GitHub Releases.
 2. Extract the archive contents into your `Valheim/BepInEx/plugins/` directory.
-3. Ensure both client and dedicated server have XPortal Networks Teams Pinss installed for multiplayer synchronization.
+3. Ensure both client and dedicated server have XPortal Networks Tribes Pins installed for multiplayer synchronization.
 
 ---
 
@@ -180,7 +180,7 @@ Use a mod manager like **Gale** or **Thunderstore Mod Manager** to download and 
 
 ## Credits & Acknowledgements
 
-* **[Vapok](https://github.com/Vapok)**: Author of the the expanded [**XPortalNetworks**](https://github.com/Vapok/XPortalNetworks) - the base this project is built upon and continues.
+* **[Vapok](https://github.com/Vapok)**: Author of the expanded [**XPortalNetworks**](https://github.com/Vapok/XPortalNetworks) - the base this project is built upon and continues.
 * **[SpikeHimself](https://github.com/SpikeHimself)**: Creator of the original **XPortal** mod, upon which XPortal Networks is built and expanded.
 * **[sweetgiorni](https://valheim.thunderstore.io/package/sweetgiorni/AnyPortal/)**: Creator of the original AnyPortal concept.
 * **[buldosik](https://thunderstore.io/c/valheim/p/buldosik/)**: Author of [**XPortalSharedMapPins**](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - the standalone companion mod that inspired this mod's portal map pins (built in as of v2.6.0). Credited as an **inspiration only**: this mod contains no code from that project.
