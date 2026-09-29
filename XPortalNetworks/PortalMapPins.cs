@@ -5,8 +5,12 @@ using UnityEngine;
 namespace XPortalNetworks
 {
     /// <summary>
-    /// Client-side map integration, ported from the standalone "XPortal Shared Map Pins" mod: every known
-    /// portal the local player is allowed to use gets a pin on that player's own map.
+    /// Client-side map integration where every known portal the local player is allowed to use gets a pin on
+    /// that player's own map.
+    ///
+    /// The idea comes from buldosik's standalone "XPortal Shared Map Pins" mod, which is credited as an
+    /// inspiration only: the implementation here is this mod's own, written against the vanilla <c>Minimap</c>
+    /// API, and it contains no code from that project.
     ///
     /// The pins are local map data - nothing is written to the world, nothing is sent over the network and
     /// vanilla player pins are untouched. The access rules are XPortalNetworks' own, so a player only ever
@@ -38,11 +42,13 @@ namespace XPortalNetworks
         private static Sprite portalPinSprite;
 
         /// <summary>
-        /// The bright blue the standalone "XPortal Shared Map Pins" mod used for its pins. It renders as-is
-        /// because our marker is a neutral sprite; <see cref="ReapplyColours"/> re-applies it because
-        /// <see cref="Minimap.UpdatePins"/> tints every marker itself (white for the player's own pins).
+        /// Lime green (<c>#32CD32</c>), this fork's own pin colour - the standalone "XPortal Shared Map Pins"
+        /// mod that inspired these pins (an inspiration only - no code from that project is used here)
+        /// tinted its own pins bright blue. It renders as-is because our marker is a neutral sprite;
+        /// <see cref="ReapplyColours"/> re-applies it because <see cref="Minimap.UpdatePins"/> tints every
+        /// marker itself (white for the player's own pins).
         /// </summary>
-        private static readonly Color PortalPinColour = new Color(0.4f, 0.8f, 1f, 1f);
+        private static readonly Color PortalPinColour = new Color(0.196f, 0.804f, 0.196f, 1f);
 
         private static bool pinTypeInstalled;
         private static bool refreshQueued = true;
@@ -418,7 +424,8 @@ namespace XPortalNetworks
 
         /// <summary>
         /// Resolves the sprite our pins use, once per session: the game's own portal map icon when the map
-        /// icon list has one - the standalone "XPortal Shared Map Pins" mod looked for a sprite whose name
+        /// icon list has one - the standalone "XPortal Shared Map Pins" mod that inspired these pins (an
+        /// inspiration only - no code from that project is used here) looked for a sprite whose name
         /// contains "portal" - otherwise a generated marker.
         /// </summary>
         private static Sprite ResolvePortalPinSprite(Minimap minimap)
@@ -446,7 +453,8 @@ namespace XPortalNetworks
         }
 
         /// <summary>
-        /// The map icon list's portal sprite, if it has one - the same rule the standalone mod used.
+        /// The map icon list's portal sprite, if it has one - the same rule the standalone mod that inspired
+        /// these pins used (an inspiration only - no code from that project is used here).
         /// </summary>
         private static Sprite FindPortalIcon(List<Minimap.SpriteData> icons)
         {
@@ -486,35 +494,41 @@ namespace XPortalNetworks
         }
 
         /// <summary>
-        /// The standalone mod's generated portal marker: a thin white ring, so the pin colour can be applied
-        /// as a tint. Only used when the game's own portal icon cannot be found (the same fallback order the
-        /// standalone mod had).
+        /// The generated portal marker: a thin white ring, so the pin colour can be applied as a tint. It is
+        /// the same ring the standalone mod that inspired these pins generated, and is only used when the
+        /// game's own portal icon cannot be found (the same fallback order that mod had) - an inspiration
+        /// only: no code from that project is used here.
+        ///
+        /// The ring is drawn by walking the pixel buffer by index and measuring how far each pixel sits from
+        /// the texture's centre, so the result is a pale circle whose coverage fades outwards over 0.9 pixels
+        /// on either side of a 9.5 pixel radius.
         /// </summary>
         private static Sprite CreateFallbackPortalIcon()
         {
-            const int size = 32;
+            const int dimension = 32;
+            const float ringRadius = 9.5f;
+            const float ringWidth = 0.9f;
 
-            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false)
-            {
-                name = "XPortalNetworks_PortalIcon",
-                filterMode = FilterMode.Bilinear,
-                wrapMode = TextureWrapMode.Clamp,
-            };
+            // The centre of the texture sits between its two middle pixels (31 / 2 = 15.5).
+            var middle = new Vector2((dimension - 1) / 2f, (dimension - 1) / 2f);
 
-            var pixels = new Color[size * size];
-            for (var y = 0; y < size; y++)
+            var texture = new Texture2D(dimension, dimension, TextureFormat.RGBA32, false);
+            texture.name = "XPortalNetworks_PortalIcon";
+            texture.wrapMode = TextureWrapMode.Clamp;
+            texture.filterMode = FilterMode.Bilinear;
+
+            var pixels = new Color[dimension * dimension];
+            for (var index = 0; index < pixels.Length; index++)
             {
-                for (var x = 0; x < size; x++)
-                {
-                    var distance = Vector2.Distance(new Vector2(x, y), new Vector2(15.5f, 15.5f));
-                    var alpha = Mathf.Clamp01((0.9f - Mathf.Abs(distance - 9.5f)) * 4f);
-                    pixels[(y * size) + x] = new Color(1f, 1f, 1f, alpha);
-                }
+                var offset = new Vector2(index % dimension, index / dimension) - middle;
+                var edgeDistance = Mathf.Abs(offset.magnitude - ringRadius);
+                pixels[index] = new Color(1f, 1f, 1f, Mathf.Clamp01((ringWidth - edgeDistance) * 4f));
             }
 
             texture.SetPixels(pixels);
-            texture.Apply();
-            return Sprite.Create(texture, new Rect(0f, 0f, size, size), new Vector2(0.5f, 0.5f), size);
+            texture.Apply(true, false);
+            return Sprite.Create(texture, new Rect(0f, 0f, dimension, dimension), new Vector2(0.5f, 0.5f),
+                dimension);
         }
     }
 }

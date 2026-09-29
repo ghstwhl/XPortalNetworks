@@ -21,7 +21,7 @@ If you prefer to play without a map, this button can be hidden, either by using 
 
 <#= mf.Heading("Portals on your map", size: HeadingSize.Small) #>
 
-<#= thisModName #> can pin every portal you are allowed to use onto your own map - this is the functionality of the standalone <#= mf.Link("XPortal Shared Map Pins", "https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins") #> mod, built right in. Portals on the Global network, portals on tribe networks you are a member of, and your own private portals are pinned automatically; other players' private portals and restricted networks are not, so the map never reveals portals you cannot use.
+<#= thisModName #> can pin every portal you are allowed to use onto your own map - this is the feature the standalone <#= mf.Link("XPortal Shared Map Pins", "https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins") #> mod inspired, built right in as this mod's own re-implementation (an inspiration only - no code from that project is used here). Portals on the Global network, portals on tribe networks you are a member of, and your own private portals are pinned automatically; other players' private portals and restricted networks are not, so the map never reveals portals you cannot use.
 
 The pins are local to your client - nothing is written to the world and nothing is sent to other players - and they follow renamed, moved and destroyed portals. Use <#= mf.Code("Show Portal Map Pins") #> to turn them off, and <#= mf.Code("Show Network In Pin Name") #> to prefix each pin with the network it belongs to (for example "[Trade Hub] North Base").
 
@@ -57,7 +57,7 @@ mf.List(ListBullets.Asterisk, items: new string[] {
 	$"{linkValheimVR} by Flatscreen to VR Modders",
 	$"{linkStonePortal} by Jere Kuusela",
 	$"{linkAdvancedPortals} by Randy Knapp",
-	$"{mf.Link(\"XPortal Shared Map Pins\", \"https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins\")} by buldosik (built in since v2.6.0 - remove the standalone mod to avoid duplicate map pins)"
+	$"{mf.Link(\"XPortal Shared Map Pins\", \"https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins\")} by buldosik (built in since v2.6.0 as an inspiration only - no code from that project is used here; remove the standalone mod to avoid duplicate map pins)"
 })
 #>
 Furthermore, <#= thisModName #> has a configuration option to fully integrate with <#= linkAdvancedPortals #>. If you set <#= mf.Code("DisplayPortalColour") #> to <#= mf.Code("True") #>, each portal in <#= thisModName #>'s dropdown list will be prepended by a ">>" tag that has the same colour as the light that the portal emits. As of v1.2.10, Stone Portals also get their own colour!

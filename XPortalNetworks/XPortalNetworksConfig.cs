@@ -143,8 +143,9 @@ namespace XPortalNetworks
         /// </summary>
         private void ReloadLocalConfig()
         {
-            // Add Nexus ID to config for Nexus Update Check (https://www.nexusmods.com/valheim/mods/102)
-            configFile.Bind("General", "NexusID", Mod.Info.NexusId, "Nexus mod ID for updates (do not change)");
+            // NOTE: no `General/NexusID` key here. It existed only to point aedenthorn's "Nexus Update Check"
+            // (https://www.nexusmods.com/valheim/mods/102) at a Nexus page, and the ID it carried was the
+            // upstream mod's page, not this fork's - there is no Nexus upload of this fork to point at.
 
             // Add PingMapDisabled option which disables the Ping Map button
             var cfgPingMapDisabled = configFile.Bind(

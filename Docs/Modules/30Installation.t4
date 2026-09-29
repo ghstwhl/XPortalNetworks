@@ -13,7 +13,7 @@ I very strongly recommend using a mod manager such as <#= linkVortex #> or <#= l
 mf.List(ListBullets.Number, items: new string[] {
 	$"Make sure you have {linkBepInEx} installed.",
 	$"Install {linkJotunn}.",
-	$"On {mf.Link("Nexus Mods", urlThisModNexus)} click 'Mod manager download', or on {mf.Link("Thunderstore", urlThisModThunderstore)} click 'Install with Mod Manager'."
+	$"On {mf.Link("Thunderstore", urlThisModThunderstore)} click 'Install with Mod Manager', or download the latest release from the {mf.Link("GitHub releases page", urlThisModGitHubReleases)}."
 })
 #>
 

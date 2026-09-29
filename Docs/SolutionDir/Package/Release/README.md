@@ -36,7 +36,7 @@ If you prefer to play without a map, this button can be hidden, either by using 
 
 #### Portals on your map
 
-XPortalNetworks can pin every portal you are allowed to use onto your own map - this is the functionality of the standalone [XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins) mod, built right in. Portals on the Global network, portals on tribe networks you are a member of, and your own private portals are pinned automatically; other players' private portals and restricted networks are not, so the map never reveals portals you cannot use.
+XPortalNetworks can pin every portal you are allowed to use onto your own map - this is the feature the standalone [XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins) mod inspired, built right in as this mod's own re-implementation (an inspiration only - no code from that project is used here). Portals on the Global network, portals on tribe networks you are a member of, and your own private portals are pinned automatically; other players' private portals and restricted networks are not, so the map never reveals portals you cannot use.
 
 The pins are local to your client - nothing is written to the world and nothing is sent to other players - and they follow renamed, moved and destroyed portals. Use `Show Portal Map Pins` to turn them off, and `Show Network In Pin Name` to prefix each pin with the network it belongs to (for example "[Trade Hub] North Base").
 
@@ -67,7 +67,7 @@ XPortalNetworks has been made fully compatible with the following mods:
 * [VHVR - Valheim VR](https://valheim.thunderstore.io/package/Maynard/VHVR/) by Flatscreen to VR Modders
 * [Stone Portal](https://valheim.thunderstore.io/package/JereKuusela/Stone_Portal/) by Jere Kuusela
 * [Advanced Portals](https://valheim.thunderstore.io/package/RandyKnapp/AdvancedPortals/) by Randy Knapp
-* [XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins) by buldosik (built in since v2.6.0 - remove the standalone mod to avoid duplicate map pins)
+* [XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins) by buldosik (built in since v2.6.0 as an inspiration only - no code from that project is used here; remove the standalone mod to avoid duplicate map pins)
 
 Furthermore, XPortalNetworks has a configuration option to fully integrate with [Advanced Portals](https://valheim.thunderstore.io/package/RandyKnapp/AdvancedPortals/). If you set `DisplayPortalColour` to `True`, each portal in XPortalNetworks's dropdown list will be prepended by a ">>" tag that has the same colour as the light that the portal emits. As of v1.2.10, Stone Portals also get their own colour!
 
@@ -138,7 +138,7 @@ XPortalNetworks makes use of the [Jotunn](https://valheim.thunderstore.io/packag
 I very strongly recommend using a mod manager such as [Vortex](https://www.nexusmods.com/site/mods/1) or [r2modman](https://valheim.thunderstore.io/package/ebkr/r2modman/). They will take care of everything for you and you don't have to worry about which files go where. I recommend against manual installation.
 1. Make sure you have [BepInEx](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/) installed.
 2. Install [Jotunn](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/).
-3. On [Nexus Mods](https://www.nexusmods.com/valheim/mods/3719) click 'Mod manager download', or on [Thunderstore](https://valheim.thunderstore.io/package/NorCal_Nerds/XPortalNetworksTribesPins/) click 'Install with Mod Manager'.
+3. On [Thunderstore](https://valheim.thunderstore.io/package/NorCal_Nerds/XPortalNetworksTribesPins/) click 'Install with Mod Manager', or download the latest release from the [GitHub releases page](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases).
 
 
 To install XPortalNetworks on a dedicated server, copy all of the contents of the `plugins\` directory found inside the .zip file download to the  `Valheim\BepInEx\plugins\` directory on your server. 

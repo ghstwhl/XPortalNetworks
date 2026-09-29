@@ -14,7 +14,7 @@
 
 <div align="center">
 
-[![Nexus Mods](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/nexus-logo-small.png)](https://www.nexusmods.com/valheim/mods/2239) &nbsp;&nbsp;&nbsp; [![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](https://valheim.thunderstore.io/package/NorCal_Nerds/XPortalNetworksTribesPins/)
+[![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](https://valheim.thunderstore.io/package/NorCal_Nerds/XPortalNetworksTribesPins/)
 
 </div>
 
@@ -82,7 +82,8 @@ Fully navigable using controllers with integrated on-screen key hints:
 
 * **[Jötunn, the Valheim Library](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)** (Required)
 * **[Advanced Portals](https://valheim.thunderstore.io/package/RandyKnapp/AdvancedPortals/)**: Fully integrated—displays matching colored light icons in dropdowns.
-* **[XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins)**: Built in as of v2.6.0 — remove the standalone mod, or you will see duplicate map pins.* **[Stone Portal](https://valheim.thunderstore.io/package/JereKuusela/Stone_Portal/)**: Supported with distinctive portal coloring.
+* **[XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins)**: Inspiration for this mod's portal map pins (no code from that project is used here), built in as of v2.6.0 — remove the standalone mod, or you will see duplicate map pins.
+* **[Stone Portal](https://valheim.thunderstore.io/package/JereKuusela/Stone_Portal/)**: Supported with distinctive portal coloring.
 * **[VHVR - Valheim VR](https://valheim.thunderstore.io/package/Maynard/VHVR/)**: Compatible.
 * **[Nexus Update Check](https://valheim.thunderstore.io/package/nexusreupload/aedenthorn_Nexus_Update_Check/)**: Compatible.
 
@@ -170,5 +171,5 @@ Use a mod manager like **Gale** or **Vortex** to download and install XPortal Ne
 * **[Vapok](https://github.com/Vapok)**: Author of the the expanded [**XPortalNetworks**](https://github.com/Vapok/XPortalNetworks) - the base this project is built upon and continues.
 * **[SpikeHimself](https://github.com/SpikeHimself)**: Creator of the original **XPortal** mod, upon which XPortal Networks is built and expanded.
 * **[sweetgiorni](https://valheim.thunderstore.io/package/sweetgiorni/AnyPortal/)**: Creator of the original AnyPortal concept.
-* **[buldosik](https://thunderstore.io/c/valheim/p/buldosik/)**: Author of [**XPortalSharedMapPins**](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - the standalone companion mod whose portal map-pin functionality is built into this mod as of v2.6.0.
+* **[buldosik](https://thunderstore.io/c/valheim/p/buldosik/)**: Author of [**XPortalSharedMapPins**](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - the standalone companion mod that inspired this mod's portal map pins (built in as of v2.6.0). Credited as an **inspiration only**: this mod contains no code from that project.
 * **Translations & Community**: Thanks to *kaiqueknup*, *makou*, *Smok3y97*, *MexExe*, *hanawa07*, *bonesbro*, *VasariRulez*, *Felix*, and *cawa-93* for original translations and community contributions.
