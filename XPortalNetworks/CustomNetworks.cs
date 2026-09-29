@@ -13,7 +13,7 @@ namespace XPortalNetworks
     /// Configured portal networks (ids 1–15). Id 0 is normal Global.
     ///
     /// Networks are defined by the server in the per-network <c>[Portal Network &lt;n&gt;]</c> sections of
-    /// <c>vapok.mods.xportalnetworks.cfg</c> (<c>Name</c> and <c>Permitted</c>). Those entries are handed to
+    /// <c>ghostwheel.mods.xportalnetworkstribespins.cfg</c> (<c>Name</c> and <c>Permitted</c>). Those entries are handed to
     /// Jotunn's ServerSync, so the server pushes them to every client and only an admin (or the host) can
     /// change them - networks can therefore be managed from inside the game instead of editing files on the server.
     ///
@@ -433,7 +433,16 @@ namespace XPortalNetworks
 
         private static string GetConfigFilePath()
         {
-            return Path.Combine(Paths.ConfigPath, Mod.Info.Name, LegacyConfigFileName);
+            // The path is derived from the plugin Name, which changed in 3.0.0: a file left behind in the
+            // old folder is still picked up, so an upgrade can still do its one-time import.
+            var path = Path.Combine(Paths.ConfigPath, Mod.Info.Name, LegacyConfigFileName);
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            var legacyPath = Path.Combine(Paths.ConfigPath, Mod.Info.LegacyName, LegacyConfigFileName);
+            return File.Exists(legacyPath) ? legacyPath : path;
         }
 
         /// <summary>

@@ -5,8 +5,6 @@ using BepInEx;
 using Jotunn.Managers;
 using Jotunn.Utils;
 using UnityEngine;
-using Vapok.Common.Abstractions;
-using Vapok.Common.Managers.Splash;
 using XPortalNetworks.Extension;
 using XPortalNetworks.RPC;
 using XPortalNetworks.UI;
@@ -22,19 +20,22 @@ namespace XPortalNetworks
     // they change, and only server admins (or the host) are allowed to change them - including from
     // within the game client through the ConfigurationManager window.
     [SynchronizationMode(AdminOnlyStrictness.Always)]
-    public class XPortalNetworks : BaseUnityPlugin, IPluginInfo
+    public class XPortalNetworks : BaseUnityPlugin
     {
-        //Interface Properties
-        public string PluginId => Mod.Info.GUID;
-        public string DisplayName => Mod.Info.Name;
-        public string Version => Mod.Info.Version;
-        public BaseUnityPlugin Instance => this;
-
         public const string Key_TargetId = Mod.Info.Name + "_TargetId";
         public const string Key_PreviousId = Mod.Info.Name + "_PreviousId";
         public const string Key_NetworkOwnerPlayerId = Mod.Info.Name + "_NetworkOwnerPlayerId";
         public const string Key_NetworkOwnerDisplayName = Mod.Info.Name + "_NetworkOwnerDisplayName";
         public const string Key_IsPrivate = Mod.Info.Name + "_IsPrivate";
+
+        // The same keys as written by 2.6.0 and older, when the plugin Name was still `XPortalNetworks`.
+        // Reads fall back to them and writes keep them in sync, so worlds built with those versions keep
+        // their portal links, networks and private flags - see ZdoTools.
+        public const string LegacyKey_TargetId = Mod.Info.LegacyName + "_TargetId";
+        public const string LegacyKey_PreviousId = Mod.Info.LegacyName + "_PreviousId";
+        public const string LegacyKey_NetworkOwnerPlayerId = Mod.Info.LegacyName + "_NetworkOwnerPlayerId";
+        public const string LegacyKey_NetworkOwnerDisplayName = Mod.Info.LegacyName + "_NetworkOwnerDisplayName";
+        public const string LegacyKey_IsPrivate = Mod.Info.LegacyName + "_IsPrivate";
 
         public const string StonePortalPrefabName = "portal";
 
@@ -47,14 +48,8 @@ namespace XPortalNetworks
         {
             Log.Debug("I HAVE ARRIVED!");
 
+            XPortalNetworksConfig.Instance.MigrateLegacyConfigFile(Config);
             XPortalNetworksConfig.Instance.LoadLocalConfig(Config);
-
-            ModSplashManager.Register(new ModSplashDossier(this)
-            {
-                Tagline = "Select portal destinations from a list with custom networks and private portals support.",
-                ShowOnStartup = XPortalNetworksConfig.Instance.Local.ShowSplashOnStartup,
-                EnableTelemetry = XPortalNetworksConfig.Instance.Local.EnableTelemetry,
-            });
 
             XPortalNetworksConfig.Instance.OnLocalConfigChanged += OnLocalConfigChanged;
 

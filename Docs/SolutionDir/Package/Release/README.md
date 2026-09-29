@@ -82,7 +82,7 @@ XPortalNetworks is known to be fully incompatible with:
 
 # Configuration
 
-XPortalNetworks's config file, which can be found at `Valheim\BepInEx\config\vapok.mods.xportalnetworks.cfg`, contains the following settings:
+XPortalNetworks's config file, which can be found at `Valheim\BepInEx\config\ghostwheel.mods.xportalnetworkstribespins.cfg`, contains the following settings:
 
 `PingMapDisabled`
 
@@ -119,14 +119,6 @@ When disabled (the default), server admins and the host are treated like normal 
 `Portal Network 1`
 
 Each network (ids 1-15) has its own section with two settings: `Name` and `Permitted`. Leave the name empty to keep that slot unused, and leave `Permitted` empty to let everyone use the network. `Permitted` takes comma separated player ids, such as `Steam_12345678901234567`. These settings are owned by the server: they are synchronized to all clients and can only be changed by server admins - which means networks can be added, renamed and restricted from inside the game, through the ConfigurationManager window.
-
-`Show Splash on Startup`
-
-If enabled, displays the mod overview and links splash screen on game startup.
-
-`Enable Anonymous Telemetry`
-
-If enabled, sends anonymous mod launch and heartbeat telemetry to help improve mod stability and track active versions.
 
 `Show Portal Map Pins`
 

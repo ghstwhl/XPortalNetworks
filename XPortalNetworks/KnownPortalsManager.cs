@@ -147,8 +147,8 @@ namespace XPortalNetworks
                 {
                     Name = portalZDO.GetString("tag"),
                     Location = portalZDO.GetPosition(),
-                    PreviousId = portalZDO.GetZDOID(XPortalNetworks.Key_PreviousId),
-                    Target = portalZDO.GetZDOID(XPortalNetworks.Key_TargetId),
+                    PreviousId = ZdoTools.GetPreviousId(portalZDO),
+                    Target = ZdoTools.GetTarget(portalZDO),
                     NetworkOwnerPlayerId = ZdoTools.GetNetworkOwnerPlayerId(portalZDO),
                     NetworkOwnerDisplayName = ZdoTools.GetNetworkOwnerDisplayName(portalZDO),
                     IsPrivate = ZdoTools.GetIsPrivate(portalZDO),

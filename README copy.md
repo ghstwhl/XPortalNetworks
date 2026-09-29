@@ -136,7 +136,7 @@ Fully navigable using controllers with integrated on-screen key hints:
 ## Configuration
 
 ### General & Server Settings
-The main configuration file is located at `BepInEx/config/vapok.mods.xportalnetworks.cfg`. Server-owned settings (`PingMapDisabled`, `DoublePortalCosts`, `HidePortalDistance`, `RestrictPortalRemoval`, `AdminsSeeAllNetworks` and the `Portal Networks` entries) are synchronized from the server to every connected client via Jotunn's ServerSync, and can only be changed by server admins (or the host) - including from within the game client through the ConfigurationManager window.
+The main configuration file is located at `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`. Server-owned settings (`PingMapDisabled`, `DoublePortalCosts`, `HidePortalDistance`, `RestrictPortalRemoval`, `AdminsSeeAllNetworks` and the `Portal Networks` entries) are synchronized from the server to every connected client via Jotunn's ServerSync, and can only be changed by server admins (or the host) - including from within the game client through the ConfigurationManager window.
 
 | Setting | Type | Description |
 | :--- | :--- | :--- |
@@ -148,14 +148,12 @@ The main configuration file is located at `BepInEx/config/vapok.mods.xportalnetw
 | **`Portal Network <n>` -> `Name`** | *Server Enforced* | Display name of portal network *n* (1-15). Leave empty to keep that slot unused. |
 | **`Portal Network <n>` -> `Permitted`** | *Server Enforced* | Comma separated player ids allowed to use network *n* (e.g. `Steam_12345678901234567`). Empty allows everyone. |
 | **`DefaultPrivatePortal`** | *Client Config* | If true, newly placed portals start as private (owner-only). |
-| **`Show Splash on Startup`** | *Client Config* | Displays the mod overview and links splash screen on game startup. |
-| **`Enable Anonymous Telemetry`** | *Client Config* | Sends anonymous mod launch and heartbeat telemetry. |
 | **`Show Portal Map Pins`** | *Client Config* | Shows the portals you are allowed to use as pins on your own map. |
 | **`Show Network In Pin Name`** | *Client Config* | Prefixes map pins with the name of the portal network, e.g. `[Trade Hub] North Base`. |
 | **`DisplayPortalColour`** | *Client Config* | Displays colored indicators matching portal types in the menu. |
 
 ### Custom Named Networks (config)
-Servers define custom networks (ids 1-15) in per-network sections of `BepInEx/config/vapok.mods.xportalnetworks.cfg`:
+Servers define custom networks (ids 1-15) in per-network sections of `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`:
 
 ```ini
 [Portal Network 1]
@@ -209,17 +207,13 @@ Use a mod manager like **Gale** or **Thunderstore Mod Manager** to download and 
 
 ---
 
-## 🔒 Anonymous Telemetry, Error Reporting & Privacy
+## 🔒 Privacy
 
-XPortal Networks Teams Pins includes lightweight, privacy-first telemetry and error reporting to help monitor mod stability, diagnose unhandled bugs, and track active version adoption across game updates.
+**This mod collects and sends nothing.** As of 3.0.0 the Vapok.Valheim.Common splash screen, its anonymous usage telemetry (`mod_launch`, `mod_heartbeat`, `world_session_start`) and its error reporting are no longer used at all: the mod never contacts that telemetry endpoint, never registers itself with it, and neither reads nor writes its opt-in preferences. There is no telemetry toggle to configure, and no setting in this mod's config file causes anything to leave your machine.
 
-* **100% Anonymous**: We never collect personal data, Steam IDs, IP addresses, character/world names, or file system paths. Stack traces from errors are automatically sanitized to strip local user directories.
-* **Granular Player Control**:
-  * **Anonymous Telemetry (Opt-In)**: Tracks version adoption and session launches. Defaults to **unchecked / disabled** when first loaded (`Enable Anonymous Telemetry = false`).
-  * **Error Reporting (Opt-Out)**: Captures sanitized mod crash diagnostics to rapidly identify and fix bugs. Defaults to **enabled** (`Send Error Reports = true`) with one-click opt-out.
-  * **Data Disclaimers**: Hover over any toggle in the startup modal for interactive tooltip disclaimers detailing exactly what data is transmitted.
-* **In-Game & Online Privacy Policy**: The full privacy policy can be viewed directly in-game by clicking **`[ PRIVACY POLICY ]`** on the startup splash modal, or online at [vapok.io/privacy-policy](https://vapok.io/privacy-policy/).
-* **Configuration Files**: Settings can be managed in-game via the startup modal, through the BepInEx Configuration Manager, or under `[Local Config]` in `BepInEx/config/vapok.mods.xportalnetworks.cfg`.
+* **What this mod stores locally**: your own configuration file (see below), and the portal map pins, which are local map data - nothing is written to the world, sent over the network, or saved into your map file.
+* **Third-party telemetry**: Unity's and the game's own analytics are untouched by this mod, and nothing here changes them either.
+* **Configuration Files**: Settings can be managed through the BepInEx Configuration Manager, or by editing `[General]` and `[Local Config]` in `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`.
 
 ---
 

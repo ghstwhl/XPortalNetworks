@@ -38,14 +38,6 @@ When disabled (the default), server admins and the host are treated like normal 
 
 Each network (ids 1-15) has its own section with two settings: <#= mf.Code("Name") #> and <#= mf.Code("Permitted") #>. Leave the name empty to keep that slot unused, and leave <#= mf.Code("Permitted") #> empty to let everyone use the network. <#= mf.Code("Permitted") #> takes comma separated player ids, such as <#= mf.Code("Steam_12345678901234567") #>. These settings are owned by the server: they are synchronized to all clients and can only be changed by server admins - which means networks can be added, renamed and restricted from inside the game, through the ConfigurationManager window.
 
-<#= mf.Code("Show Splash on Startup") #>
-
-If enabled, displays the mod overview and links splash screen on game startup.
-
-<#= mf.Code("Enable Anonymous Telemetry") #>
-
-If enabled, sends anonymous mod launch and heartbeat telemetry to help improve mod stability and track active versions.
-
 <#= mf.Code("Show Portal Map Pins") #>
 
 If enabled (the default), the portals you are allowed to use are shown as pins on your own map. Only portals on networks you can access, plus your own private portals, are pinned - other players' private portals never are. This is a local preference, and no portal pins are shown at all while the server has <#= mf.Code("PingMapDisabled") #> enabled.

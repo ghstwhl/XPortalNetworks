@@ -107,7 +107,7 @@ Fully navigable using controllers with integrated on-screen key hints:
 ## Configuration
 
 ### General & Server Settings
-The main configuration file is located at `BepInEx/config/vapok.mods.xportalnetworks.cfg`. Server-owned settings (`PingMapDisabled`, `DoublePortalCosts`, `HidePortalDistance`, `RestrictPortalRemoval`, `AdminsSeeAllNetworks` and the `Portal Networks` entries) are synchronized from the server to every connected client via Jotunn's ServerSync, and can only be changed by server admins (or the host) - including from within the game client through the ConfigurationManager window.
+The main configuration file is located at `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`. Server-owned settings (`PingMapDisabled`, `DoublePortalCosts`, `HidePortalDistance`, `RestrictPortalRemoval`, `AdminsSeeAllNetworks` and the `Portal Networks` entries) are synchronized from the server to every connected client via Jotunn's ServerSync, and can only be changed by server admins (or the host) - including from within the game client through the ConfigurationManager window.
 
 * **`PingMapDisabled`** *(Server Enforced)*: Disables map pinging for servers playing with `nomap` or immersive navigation rules.
 * **`HidePortalDistance`** *(Server Enforced)*: Hides the meter distance displayed next to portal names in the dropdown.
@@ -117,14 +117,12 @@ The main configuration file is located at `BepInEx/config/vapok.mods.xportalnetw
 * **`Portal Network <n>` -> `Name`** *(Server Enforced)*: Display name of portal network *n* (1-15). Leave empty to keep that slot unused.
 * **`Portal Network <n>` -> `Permitted`** *(Server Enforced)*: Comma separated player ids allowed to use network *n* (e.g. `Steam_12345678901234567`). Empty allows everyone.
 * **`DefaultPrivatePortal`**: If true, newly placed portals start as private (owner-only).
-* **`Show Splash on Startup`**: Displays the mod overview and links splash screen on game startup.
-* **`Enable Anonymous Telemetry`**: Sends anonymous mod launch and heartbeat telemetry.
 * **`Show Portal Map Pins`**: Shows the portals you are allowed to use as pins on your own map.
 * **`Show Network In Pin Name`**: Prefixes map pins with the name of the portal network, e.g. `[Trade Hub] North Base`.
 * **`DisplayPortalColour`**: Displays colored indicators matching portal types in the menu.
 
 ### Custom Named Networks (config)
-Servers define custom networks (ids 1-15) in per-network sections of `BepInEx/config/vapok.mods.xportalnetworks.cfg`:
+Servers define custom networks (ids 1-15) in per-network sections of `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`:
 
 ```ini
 [Portal Network 1]

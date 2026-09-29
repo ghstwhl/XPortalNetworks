@@ -10,7 +10,7 @@
            - ModInfo.Version is MAJOR.MINOR.PATCH and in sync with both manifest.json files,
            - every translation JSON file parses,
            - the local reference assemblies exist.
-      3. Builds the project with MSBuild (ILRepack internalizes Vapok.Valheim.Common).
+      3. Builds the project with MSBuild.
       4. For Release, assembles the Thunderstore-style package and two identical zips:
          XPortalNetworks-release.zip and XPortalNetworks-<version>.zip.
 

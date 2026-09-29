@@ -4,7 +4,7 @@ External sources used while developing, fixing and documenting **XPortalNetworks
 BepInEx mod). Everything listed is a third-party artifact or publication; none of it is
 distributed with this repository.
 
-- **Mod version at time of writing:** 2.6.0
+- **Mod version at time of writing:** 3.0.0
 - **Game:** Valheim 1.0.16 — Unity **6000.0.75f1** (`UnityPlayer.dll` reports `6000.0.75.2503836`)
 - **Last updated:** 2026-09-29
 
@@ -33,7 +33,7 @@ layout under `$(ReferencesRoot)` (`.references/`) — see [`.references/README.m
 | **BepInEx** (upstream 5.x line) — <https://github.com/BepInEx/BepInEx> | 5.4.x (EOL) | Cite reference only | Historical/API reference; **not** the source of the pack we build against — see the note below this table |
 | **HarmonyX** — <https://github.com/BepInEx/HarmonyX> | 2.9.0 (`0Harmony.dll`) | BepInEx pack / `packages.config` reference | All runtime patches (`Patches/*`) |
 | **Jötunn (Jotunn)** — <https://github.com/ValheimModding/Jotunn> | 2.30.2 | NuGet package `JotunnLib` 2.30.2 (`packages.config`); <https://www.nuget.org/packages/JotunnLib> | Mod-framework helpers; **`Jotunn.Managers.SynchronizationManager`** (ServerSync), `SynchronizationModeAttribute` + `AdminOnlyStrictness`, `NetworkCompatibility`, `GUIManager.IsHeadless()`, `MinimapManager`, `ConfigEntryBaseExtension` |
-| **Vapok.Valheim.Common** — <https://github.com/Vapok/Vapok.Common> | NuGet 3.21.1015 (assembly 2.11.2214.0) | NuGet; <https://www.nuget.org/packages/Vapok.Valheim.Common> | `ModSplashManager`/`ModSplashDossier`, `TelemetryManager`, logging, `Vapok.Common.Shared.ConfigurationManagerAttributes`. Internalized into the shipped DLL by ILRepack |
+| **Vapok.Valheim.Common** — <https://github.com/Vapok/Vapok.Common> | NuGet 3.21.1015 (assembly 2.11.2214.0) | NuGet; <https://www.nuget.org/packages/Vapok.Valheim.Common> | **No longer used (removed in 3.0.0)** — the assembly reference, its `packages.config` entry and its ILRepack merge were all dropped: the splash modal (`ModSplashManager`/`ModSplashDossier`), the `TelemetryManager` (anonymous usage events and error reporting) and the last remaining usage (`Vapok.Common.Shared.ConfigurationManagerAttributes`) are gone, the two local preferences now using Jotunn's `ConfigurationManagerAttributes`, which the server-owned entries already used. Recorded here because versions up to 2.6.0 shipped it merged into the mod DLL |
 | **Official BepInEx ConfigurationManager** — <https://github.com/BepInEx/BepInEx.ConfigurationManager> | source @ `master`, read 2026-09-28 | Cite reference only | The in-game config UI. Resolves an attributes class **by type name** (not assembly identity); its own `internal sealed` class defines `Order`, `ReadOnly`, `IsAdvanced`, `Browsable`, `Category`, `CustomDrawer`, `CustomHotkeyDrawer`, `DispName`, `Description`, `HideDefaultButton`, `HideSettingName`, `DefaultValue`, `ShowRangeAsPercent`, `ObjToStr`, `StrToObj` — and **no** admin concept |
 
 ### Which BepInEx build this mod compiles against
@@ -110,7 +110,7 @@ The ConfigurationManager implementation was read from its **source** (fetched 20
 |---|---|---|
 | **AssemblyPublicizer** (CabbageCrow) — <https://github.com/CabbageCrow/AssemblyPublicizer> (binaries: <https://github.com/CabbageCrow/AssemblyPublicizer/releases>) | cached at `tools/.cache/publicizer/AssemblyPublicizer/AssemblyPublicizer.exe` (binary self-reports file version 1.0); LGPL-2.1 (bundled `Licenses/AssemblyPublicizer.LICENSE.txt`) | Publicizing `assembly_valheim`/`_utils`/`_guiutils`/`_postprocessing`; driven by [`tools/New-ValheimRefs.ps1`](tools/README.md) |
 | **BepInEx.AssemblyPublicizer** — <https://github.com/BepInEx/BepInEx.AssemblyPublicizer> | — | Documented manual alternative for producing the `_publicized` assemblies (see `.references/README.md`) |
-| **ILRepack** (`ILRepack.Lib.MSBuild.Task` 2.0.44.1) — <https://github.com/gluck/il-repack> / <https://www.nuget.org/packages/ILRepack.Lib.MSBuild.Task> | 2.0.44.1 | Post-build merge that internalizes `Vapok.Valheim.Common.dll` into `XPortalNetworks.dll` |
+| **ILRepack** (`ILRepack.Lib.MSBuild.Task` 2.0.44.1) — <https://github.com/gluck/il-repack> / <https://www.nuget.org/packages/ILRepack.Lib.MSBuild.Task> | 2.0.44.1 | **No longer used (removed in 3.0.0)** — it existed only to internalize `Vapok.Valheim.Common.dll` into `XPortalNetworks.dll`; with that dependency gone the build is a plain single-assembly MSBuild build (the project no longer imports the package's targets and has no `ILRepack.targets`) |
 | **Mono.Cecil** — <https://github.com/jbevain/cecil> | ships in the Jotunn package: `%USERPROFILE%\.nuget\packages\jotunnlib\2.30.2\build\Mono.Cecil.dll` | Reading IL/metadata for API verification (types, members, string literals, attribute arguments) |
 | **nuget.exe** — <https://dist.nuget.org/win-x86-commandline/latest/nuget.exe> | latest (auto-downloaded to `tools/.cache`) | `packages.config` restore in `tools/Build.ps1` |
 | **Microsoft.NETFramework.ReferenceAssemblies** (+ `.net48`) | 1.0.3 | Compiling against .NET Framework 4.8 without a machine-wide targeting pack |
@@ -153,8 +153,8 @@ packaging rules followed here:
 | **Stone Portal** | Integration described alongside `DisplayPortalColour` |
 | **AnyPortal** | Declared incompatible via `[BepInIncompatibility("com.sweetgiorni.anyportal")]` |
 | **ValheimCommunityPatch** (MidnightMods) | Compatibility notice in `CHANGELOG.md` (<https://thunderstore.io/c/valheim/p/MidnightMods/ValheimCommunityPatch/>) |
-| **XPortal Shared Map Pins** (buldosik) — <https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins> | Source of the 2.6.0 portal map-pin feature (read 2026-09-29). The standalone companion mod (built against XPortalNetworks 2.0.8, GUID `buldosik.XPortalSharedMapPins`, hard dependency `vapok.mods.xportalnetworks`) was re-implemented as [`PortalMapPins.cs`](XPortalNetworks/PortalMapPins.cs) — so it must **not** be installed alongside 2.6.0+, or the map gets duplicate pins |
-| **Nexus Mods** — Nexus ID 3719 / Nexus Update Check | `Mod.Info.NexusId`, `General/NexusID` config key (<https://www.nexusmods.com/valheim/mods/102>) |
+| **XPortal Shared Map Pins** (buldosik) — <https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins> | Source of the 2.6.0 portal map-pin feature (read 2026-09-29). The standalone companion mod (built against XPortalNetworks 2.0.8, GUID `buldosik.XPortalSharedMapPins`, hard dependency `vapok.mods.xportalnetworks` - the upstream GUID, which 3.0.0 stopped using: this fork registers as `ghostwheel.mods.xportalnetworkstribespins`) was re-implemented as [`PortalMapPins.cs`](XPortalNetworks/PortalMapPins.cs) — so it must **not** be installed alongside 2.6.0+, or the map gets duplicate pins |
+| **Nexus Mods** — Nexus ID 3719 / Nexus Update Check | `Mod.Info.NexusId`, `General/NexusID` config key (<https://www.nexusmods.com/valheim/mods/102>). A deliberate **reference** to the upstream mod's page (<https://www.nexusmods.com/valheim/mods/3719>) — the fork has no Nexus upload of its own — so it is not affected by the 3.0.0 plugin-identity rename |
 | **Thunderstore / BepInExPack_Valheim** | Distribution target; BepInEx core source — the pack `denikson-BepInExPack_Valheim-5.4.2350` is built from the `v5-lts` branch of <https://github.com/AzumattDev/BepInEx> (see §2) |
 
 ## 7. Source-availability notes
@@ -203,18 +203,22 @@ Recorded for transparency about where each fact came from:
 - **Valheim** and its assemblies are © Iron Gate Studio AB / Coffee Stain Publishing. They are
   used here as compile-time references only and are not redistributed.
 - **XPortal Networks** by **Vapok** — <https://github.com/Vapok/XPortalNetworks> — is the base this
-  project is built upon and continues (GPL-3.0). The plugin `GUID`, the plugin `Name` and the portal ZDO
-  keys are deliberately kept identical to it, so existing worlds and configurations stay compatible. This
-  project's own home is <https://github.com/ghstwhl/XPortalNetworksTribesPins>.
+  project is built upon and continues (GPL-3.0). Up to 2.6.0 the plugin `GUID`, the plugin `Name` and the
+  portal ZDO keys were deliberately identical to it; 3.0.0 gives the fork its own identity
+  (`ghostwheel.mods.xportalnetworkstribespins` / `XPortalNetworksTribesPins`) while still *reading* the
+  upstream-named config file and ZDO keys (`Mod.Info.LegacyGUID` / `Mod.Info.LegacyName`), so existing
+  worlds and configurations keep working. The Nexus reference (ID 3719) deliberately stays the upstream
+  mod's page. This project's own home is
+  <https://github.com/ghstwhl/XPortalNetworksTribesPins>.
 - **XPortal Shared Map Pins** by **buldosik** —
   <https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins> — is the origin of the map-pin
   feature added in 2.6.0. That repository declares **no licence** (GitHub reports none, and there is no
   `LICENSE` file), so the origin is credited explicitly here: the behaviour was re-implemented inside this
   mod against the vanilla `Minimap` API and this mod's own permission model, instead of the standalone
   mod's reflection adapter.
-- **BepInEx**, **HarmonyX**, **Jötunn**, **Vapok.Valheim.Common**, **ILRepack**, **Mono.Cecil** and
-  **AssemblyPublicizer** each remain under their own upstream licences; see the respective links
-  in §2 and §3 for terms.
+- **BepInEx**, **HarmonyX**, **Jötunn**, **Mono.Cecil** and **AssemblyPublicizer** each remain under
+  their own upstream licences; see the respective links in §2 and §3 for terms. **Vapok.Valheim.Common**
+  and **ILRepack** were used up to 2.6.0 and are no longer referenced, merged or distributed as of 3.0.0.
 - Note the caveat carried by `tools/New-ValheimRefs.ps1`: XPortalNetworks is **not affiliated**
   with AssemblyPublicizer, and only assemblies you are legally entitled to work with should be
   publicized.

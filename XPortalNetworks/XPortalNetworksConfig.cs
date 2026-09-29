@@ -1,3 +1,4 @@
+using BepInEx;
 using BepInEx.Configuration;
 using System;
 using System.Collections.Generic;
@@ -55,9 +56,6 @@ namespace XPortalNetworks
             /// </summary>
             public ConfigEntry<string>[] NetworkAllowLists = new ConfigEntry<string>[CustomNetworks.MaxId + 1];
 
-            public ConfigEntry<bool> ShowSplashOnStartup;
-            public ConfigEntry<bool> EnableTelemetry;
-
             /// <summary>Local (not synchronized) preference: pin the portals the player may use on the map.</summary>
             public ConfigEntry<bool> ShowPortalPins;
 
@@ -87,6 +85,57 @@ namespace XPortalNetworks
 
             this.configFile.ConfigReloaded += LocalConfigChanged;
             this.configFile.SettingChanged += LocalConfigChanged;
+        }
+
+        /// <summary>
+        /// Carry an existing <c>vapok.mods.xportalnetworks.cfg</c> over to the file name that replaced it in
+        /// 3.0.0 (<see cref="Mod.Info.GUID"/> - BepInEx names the plugin's config file after the GUID), so an
+        /// upgrade does not silently reset the server-owned portal networks, their allow lists, and every other
+        /// preference. Called before the settings are bound; a new file that already holds settings is left alone.
+        /// </summary>
+        /// <param name="configFile">The config file being loaded</param>
+        public void MigrateLegacyConfigFile(ConfigFile configFile)
+        {
+            this.configFile = configFile;
+
+            var newPath = configFile?.ConfigFilePath;
+            if (string.IsNullOrEmpty(newPath))
+            {
+                return;
+            }
+
+            var oldPath = Path.Combine(Paths.ConfigPath, Mod.Info.LegacyGUID + ".cfg");
+            if (!File.Exists(oldPath) || HasSettings(newPath))
+            {
+                return;
+            }
+
+            try
+            {
+                File.Copy(oldPath, newPath, overwrite: true);
+                configFile.Reload();
+                Log.Info($"Migrated the legacy config file `{Path.GetFileName(oldPath)}` to `{Path.GetFileName(newPath)}`. " +
+                         "The old file is no longer read and can be deleted.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Could not migrate the legacy config file `{oldPath}`: {ex.GetType().Name}: {ex.Message}. " +
+                          $"Settings start from their defaults - copy that file to `{newPath}` yourself to keep them.");
+            }
+        }
+
+        /// <summary>
+        /// True when the given config file exists and actually contains settings. BepInEx may already have
+        /// created an empty file for the current GUID, so the file merely existing is not enough.
+        /// </summary>
+        private static bool HasSettings(string configFilePath)
+        {
+            if (!File.Exists(configFilePath))
+            {
+                return false;
+            }
+
+            return File.ReadAllText(configFilePath).TrimStart('\uFEFF').Trim().Length > 0;
         }
 
         /// <summary>
@@ -190,35 +239,19 @@ namespace XPortalNetworks
 
             MigrateLegacyNetworkSections();
 
-            // ConfigurationManager sorts settings within a section by Order *descending* (higher number
-            // is higher on the list), so the splash toggle takes the higher value to stay on top.
-            Local.ShowSplashOnStartup = configFile.Bind(
-                "Local Config",
-                "Show Splash on Startup",
-                true,
-                new ConfigDescription("If enabled, displays the mod overview and links splash screen on game startup.",
-                    null, new Vapok.Common.Shared.ConfigurationManagerAttributes { Order = 5 }));
-
-            Local.EnableTelemetry = configFile.Bind(
-                "Local Config",
-                "Enable Anonymous Telemetry",
-                true,
-                new ConfigDescription("If enabled, sends anonymous mod launch and heartbeat telemetry to help improve mod stability and track active versions.",
-                    null, new Vapok.Common.Shared.ConfigurationManagerAttributes { Order = 4 }));
-
             Local.ShowPortalPins = configFile.Bind(
                 "Local Config",
                 "Show Portal Map Pins",
                 true,
                 new ConfigDescription("If enabled, the portals you are allowed to use are shown as pins on your own map. Only portals on networks you can access, plus your own private portals, are pinned - other players' private portals never are. This is a local preference; no portal pins are shown while the server has PingMapDisabled enabled.",
-                    null, new Vapok.Common.Shared.ConfigurationManagerAttributes { Order = 3 }));
+                    null, new ConfigurationManagerAttributes { Order = 2 }));
 
             Local.ShowNetworkInPinName = configFile.Bind(
                 "Local Config",
                 "Show Network In Pin Name",
                 false,
                 new ConfigDescription("If enabled, the map pin of a portal is prefixed with the name of the portal network it is on, for example \"[Trade Hub] North Base\". This is a local preference.",
-                    null, new Vapok.Common.Shared.ConfigurationManagerAttributes { Order = 2 }));
+                    null, new ConfigurationManagerAttributes { Order = 1 }));
         }
 
         /// <summary>

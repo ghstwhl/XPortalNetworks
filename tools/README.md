@@ -4,7 +4,7 @@ Helper scripts for building XPortalNetworks.
 
 ## `Build.ps1` — build, validate, and package (start here)
 
-One command for the whole pipeline: **NuGet restore → validation → MSBuild (+ ILRepack) →
+One command for the whole pipeline: **NuGet restore → validation → MSBuild →
 Release packaging (+ zip)**. Runs from any working directory and exits non-zero on failure
 (CI/agent friendly).
 
@@ -28,7 +28,7 @@ powershell -ExecutionPolicy Bypass -File .\tools\Build.ps1 -SkipRestore -SkipVal
    - it doesn't match `manifest.json` **and** `Docs/SolutionDir/Package/Release/manifest.json`, or
    - any `Translations\**\*.json` file is invalid JSON, or
    - the reference assemblies aren't present at `-ReferencesRoot` (default `<repo>\.references`).
-3. **Build** — MSBuild; `ILRepack` internalizes `Vapok.Valheim.Common` into a single DLL.
+3. **Build** — MSBuild; produces the single mod DLL directly - no assembly merging step.
 4. **Package** (Release) — assembles the Thunderstore-style folder and two identical zips:
    `XPortalNetworks-release.zip` (the stable "latest" name) and `XPortalNetworks-<version>.zip`
    (a copy named after the version being built).
@@ -46,7 +46,7 @@ powershell -ExecutionPolicy Bypass -File .\tools\Build.ps1 -SkipRestore -SkipVal
 ### Outputs
 
 ```
-XPortalNetworks\bin\<Configuration>\XPortalNetworks.dll       single, ILRepack-merged DLL
+XPortalNetworks\bin\<Configuration>\XPortalNetworks.dll       the mod DLL
 Release\NorCal_Nerds-XPortalNetworksTribesPins\               package (plugins\ + docs), named from ModInfo.cs
 Release\XPortalNetworks-release.zip                           Release only
 Release\XPortalNetworks-<version>.zip                         Release only (copy of the above)
