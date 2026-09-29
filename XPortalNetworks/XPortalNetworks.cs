@@ -5,8 +5,6 @@ using BepInEx;
 using Jotunn.Managers;
 using Jotunn.Utils;
 using UnityEngine;
-using Vapok.Common.Abstractions;
-using Vapok.Common.Managers.Splash;
 using XPortalNetworks.Extension;
 using XPortalNetworks.RPC;
 using XPortalNetworks.UI;
@@ -17,19 +15,27 @@ namespace XPortalNetworks
     [BepInIncompatibility("com.sweetgiorni.anyportal")]
     [BepInDependency(Jotunn.Main.ModGuid)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Patch)]
-    public class XPortalNetworks : BaseUnityPlugin, IPluginInfo
+    // Hand the server-owned config entries (those tagged with ConfigurationManagerAttributes.IsAdminOnly)
+    // over to Jotunn's ServerSync: the server pushes its values to every client on join and whenever
+    // they change, and only server admins (or the host) are allowed to change them - including from
+    // within the game client through the ConfigurationManager window.
+    [SynchronizationMode(AdminOnlyStrictness.Always)]
+    public class XPortalNetworks : BaseUnityPlugin
     {
-        //Interface Properties
-        public string PluginId => Mod.Info.GUID;
-        public string DisplayName => Mod.Info.Name;
-        public string Version => Mod.Info.Version;
-        public BaseUnityPlugin Instance => this;
-
         public const string Key_TargetId = Mod.Info.Name + "_TargetId";
         public const string Key_PreviousId = Mod.Info.Name + "_PreviousId";
         public const string Key_NetworkOwnerPlayerId = Mod.Info.Name + "_NetworkOwnerPlayerId";
         public const string Key_NetworkOwnerDisplayName = Mod.Info.Name + "_NetworkOwnerDisplayName";
         public const string Key_IsPrivate = Mod.Info.Name + "_IsPrivate";
+
+        // The same keys as written by 2.6.0 and older, when the plugin Name was still `XPortalNetworks`.
+        // Reads fall back to them and writes keep them in sync, so worlds built with those versions keep
+        // their portal links, networks and private flags - see ZdoTools.
+        public const string LegacyKey_TargetId = Mod.Info.LegacyName + "_TargetId";
+        public const string LegacyKey_PreviousId = Mod.Info.LegacyName + "_PreviousId";
+        public const string LegacyKey_NetworkOwnerPlayerId = Mod.Info.LegacyName + "_NetworkOwnerPlayerId";
+        public const string LegacyKey_NetworkOwnerDisplayName = Mod.Info.LegacyName + "_NetworkOwnerDisplayName";
+        public const string LegacyKey_IsPrivate = Mod.Info.LegacyName + "_IsPrivate";
 
         public const string StonePortalPrefabName = "portal";
 
@@ -42,17 +48,10 @@ namespace XPortalNetworks
         {
             Log.Debug("I HAVE ARRIVED!");
 
+            XPortalNetworksConfig.Instance.MigrateLegacyConfigFile(Config);
             XPortalNetworksConfig.Instance.LoadLocalConfig(Config);
 
-            ModSplashManager.Register(new ModSplashDossier(this)
-            {
-                Tagline = "Select portal destinations from a list with custom networks and private portals support.",
-                ShowOnStartup = XPortalNetworksConfig.Instance.Local.ShowSplashOnStartup,
-                EnableTelemetry = XPortalNetworksConfig.Instance.Local.EnableTelemetry,
-            });
-
             XPortalNetworksConfig.Instance.OnLocalConfigChanged += OnLocalConfigChanged;
-            XPortalNetworksConfig.Instance.OnServerConfigChanged += OnServerConfigChanged;
 
             CustomNetworks.ListChanged += OnNetworksListChanged;
 
@@ -70,6 +69,7 @@ namespace XPortalNetworks
         private void Update()
         {
             QueuedAction.Update();
+            PortalMapPins.Tick();
 
             if (Environment.IsHeadless || !Environment.GameStarted || ZInput.instance == null || !PortalConfigurationPanel.Instance.IsActive())
             {
@@ -86,7 +86,8 @@ namespace XPortalNetworks
             Log.Debug("Full portal list:");
             KnownPortalsManager.Instance.ReportAllPortals();
 
-            CustomNetworks.ShutdownServer();
+            PortalMapPins.Reset();
+
             if (!Environment.IsHeadless)
             {
                 PortalConfigurationPanel.Instance?.Dispose();
@@ -98,9 +99,6 @@ namespace XPortalNetworks
         #region Jotunn Events
         private static void MinimapManager_OnVanillaMapDataLoaded()
         {
-            SendToServer.ConfigRequest();
-            SendToServer.RequestCustomNetworks();
-
             long myId = ZDOMan.GetSessionID();
             string myName = (Game.instance != null && Game.instance.GetPlayerProfile() != null)
                 ? Game.instance.GetPlayerProfile().GetName()
@@ -154,7 +152,7 @@ namespace XPortalNetworks
                 }
 
                 int newAmount = originalAmount;
-                if (XPortalNetworksConfig.Instance.Server.DoublePortalCosts)
+                if (XPortalNetworksConfig.Instance.Local.DoublePortalCosts)
                 {
                     newAmount = 2 * originalAmount;
                     Log.Debug($"Doubling amount for requirement {req.m_resItem.name} for item {portalPiece.name} from {originalAmount} to {newAmount}");
@@ -166,7 +164,7 @@ namespace XPortalNetworks
                 req.m_amount = newAmount;
             }
 
-            portalRecipeAltered = XPortalNetworksConfig.Instance.Server.DoublePortalCosts;
+            portalRecipeAltered = XPortalNetworksConfig.Instance.Local.DoublePortalCosts;
         }
 
         private static void BackUpPortalRecipe(Piece.Requirement[] requirements)
@@ -191,6 +189,9 @@ namespace XPortalNetworks
         #region Config events
         private static void OnNetworksListChanged()
         {
+            // Network membership decides which portals are pinned.
+            PortalMapPins.MarkDirty();
+
             if (!Environment.IsHeadless)
             {
                 PortalConfigurationPanel.Instance.OnNetworksListChanged();
@@ -199,12 +200,12 @@ namespace XPortalNetworks
 
         internal static void OnLocalConfigChanged()
         {
-            // Honestly, nobody cares
-        }
-
-        internal static void OnServerConfigChanged()
-        {
+            // Server-owned settings are synchronized into our config file by Jotunn's ServerSync,
+            // so a change to them surfaces here like any other config change.
             UpdatePortalRecipe();
+
+            // Covers PingMapDisabled, AdminsSeeAllNetworks and the local pin toggles.
+            PortalMapPins.MarkDirty();
         }
         #endregion
 
@@ -215,6 +216,7 @@ namespace XPortalNetworks
             KnownPortalsManager.Instance.Reset();
             XPortalNetworksAdminSync.ResetForNewSession();
             CustomNetworks.ResetSession();
+            PortalMapPins.Reset();
             RPCManager.Register();
             if (Environment.IsServer)
             {
@@ -235,6 +237,14 @@ namespace XPortalNetworks
             if (portal == null)
             {
                 result = string.Empty;
+                return;
+            }
+
+            // Restricted ("allow_list") networks are hidden from non-members - don't reveal
+            // the portal's name or destination in the hover text.
+            if (IsPortalHiddenFromLocalPlayer(portal))
+            {
+                result = Localization.instance.Localize("$hud_xportal_network_restricted");
                 return;
             }
 
@@ -280,10 +290,66 @@ namespace XPortalNetworks
             Log.Debug($"Interacting with: {portal}");
             Piece piece = teleportWorld.GetComponent<Piece>();
             bool mayEditNetworkAsAdmin = XPortalNetworksAdminSync.IsLocalPortalNetworkAdmin();
+
+            // A portal on a tribe network this player can't access (not a member, and admin
+            // bypass disabled) must not be viewable or editable through the configuration panel.
+            // IsLocalPlayerAllowed already accounts for the gated admin bypass.
+            if (!CustomNetworks.IsLocalPlayerAllowed(portal.NetworkOwnerPlayerId))
+            {
+                Log.Debug($"Blocked configuration of portal `{portal.Id}` on restricted network `{portal.NetworkOwnerPlayerId}`");
+                ShowRestrictedNetworkMessage();
+                return;
+            }
+
             bool isCreator = piece != null && piece.IsCreator();
             bool canEditNetwork = isCreator || mayEditNetworkAsAdmin;
             bool canEditPortalFully = isCreator || mayEditNetworkAsAdmin;
             PortalConfigurationPanel.Instance.ConfigurePortal(portal, canEditNetwork, canEditPortalFully);
+        }
+
+        private static void ShowRestrictedNetworkMessage()
+        {
+            try
+            {
+                if (MessageHud.instance != null)
+                {
+                    MessageHud.instance.ShowMessage(
+                        MessageHud.MessageType.Center,
+                        Localization.instance.Localize("$hud_xportal_network_restricted"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning($"Could not show restricted network message: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// True when the portal (or its destination) sits on a restricted network the local
+        /// player is not a member of, so it should be hidden from hover text and the UI.
+        /// </summary>
+        private static bool IsPortalHiddenFromLocalPlayer(KnownPortal portal)
+        {
+            if (portal == null)
+            {
+                return false;
+            }
+
+            if (IsNetworkHiddenFromLocalPlayer(portal.NetworkOwnerPlayerId))
+            {
+                return true;
+            }
+
+            return portal.HasTarget()
+                && KnownPortalsManager.Instance.TryGetValue(portal.Target, out KnownPortal target)
+                && IsNetworkHiddenFromLocalPlayer(target.NetworkOwnerPlayerId);
+        }
+
+        private static bool IsNetworkHiddenFromLocalPlayer(long networkId)
+        {
+            // Reserved (1-15) ids the server didn't send to this client are networks it may not see.
+            return CustomNetworks.IsReservedIdRange(networkId)
+                && !CustomNetworks.IsLocalPlayerAllowed(networkId);
         }
 
         internal static void OnPortalPlaced(ZDOID portalId, Vector3 location)
@@ -337,7 +403,55 @@ namespace XPortalNetworks
 
         internal static bool LocalPrivateUseBlocked(ZDOID sourcePortalId)
         {
-            return Player.m_localPlayer != null && PrivateUseBlocked(sourcePortalId, Player.m_localPlayer.GetPlayerID());
+            if (Player.m_localPlayer == null)
+            {
+                return false;
+            }
+
+            long playerId = Player.m_localPlayer.GetPlayerID();
+            return PrivateUseBlocked(sourcePortalId, playerId) || NetworkUseBlocked(sourcePortalId, playerId);
+        }
+
+        /// <summary>
+        /// True when the player may not use the given portal because it (or its destination) sits on a
+        /// tribe network the player is not a member of. Privileged players bypass this restriction.
+        /// </summary>
+        internal static bool NetworkUseBlocked(ZDOID sourcePortalId, long playerId)
+        {
+            if (!KnownPortalsManager.Instance.TryGetValue(sourcePortalId, out KnownPortal source))
+            {
+                return false;
+            }
+
+            if (NetworkRestrictedForPlayer(source.NetworkOwnerPlayerId, playerId))
+            {
+                return true;
+            }
+
+            return source.HasTarget()
+                && KnownPortalsManager.Instance.TryGetValue(source.Target, out KnownPortal dest)
+                && NetworkRestrictedForPlayer(dest.NetworkOwnerPlayerId, playerId);
+        }
+
+        private static bool NetworkRestrictedForPlayer(long networkId, long playerId)
+        {
+            if (!CustomNetworks.IsReservedIdRange(networkId))
+            {
+                return false;
+            }
+
+            // This check runs client-side for the local player; server admins/host bypass allow
+            // lists only when the server config allows it (AdminsSeeAllNetworks).
+            bool privileged = playerId != 0L
+                && NetPeerUtility.GetLocalPlayerId() == playerId
+                && CustomNetworks.AdminsBypassNetworks
+                && XPortalNetworksAdminSync.IsLocalPortalNetworkAdmin();
+
+            return !CustomNetworks.IsPlayerAllowed(
+                networkId,
+                NetPeerUtility.GetLocalUserId(),
+                playerId != 0L ? playerId.ToString() : string.Empty,
+                privileged);
         }
 
         internal static bool IsUsablePortal(TeleportWorld portal, Player player, bool originalFlag)
@@ -350,8 +464,9 @@ namespace XPortalNetworks
             {
                 return true;
             }
-            
-            bool useBlocked = PrivateUseBlocked(zdo.m_uid, player.GetPlayerID());
+
+            long playerId = player.GetPlayerID();
+            bool useBlocked = PrivateUseBlocked(zdo.m_uid, playerId) || NetworkUseBlocked(zdo.m_uid, playerId);
 
             return !useBlocked;
         }
@@ -477,7 +592,7 @@ namespace XPortalNetworks
         {
             try
             {
-                if (XPortalNetworksConfig.Instance.Server.PingMapDisabled)
+                if (XPortalNetworksConfig.Instance.Local.PingMapDisabled)
                 {
                     return;
                 }

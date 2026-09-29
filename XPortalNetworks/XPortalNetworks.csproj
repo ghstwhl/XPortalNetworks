@@ -18,10 +18,13 @@
         <AutoUnifyAssemblyReferences>true</AutoUnifyAssemblyReferences>
         <MSBuildWarningsAsMessages>MSB3277;MSB3245;MSB3243</MSBuildWarningsAsMessages>
         <ReferencesRoot Condition="'$(ReferencesRoot)' == ''">/home/vapok/Modding/References</ReferencesRoot>
-        <VALHEIM_INSTALL>$(ReferencesRoot)\Valheim\1.0.15</VALHEIM_INSTALL>
+        <VALHEIM_INSTALL>$(ReferencesRoot)\Valheim\$(ValheimGameVersion)</VALHEIM_INSTALL>
         <BEPINEX_PATH>$(ReferencesRoot)\BepInEx\5.4.2350\BepInEx</BEPINEX_PATH>
         <ReleaseRoot>/home/vapok/Modding/Releases</ReleaseRoot>
         <ModRoot>/home/vapok/Modding/Valheim</ModRoot>
+        <!-- Package staging folder name. tools/Build.ps1 overrides this from ModInfo.cs
+             (ThunderstoreTeam-ThunderstorePackage), so the folder mirrors the published package. -->
+        <PackageFolder Condition="'$(PackageFolder)' == ''">$(AssemblyName)-Vapok</PackageFolder>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,31 +51,28 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(ReferencesRoot)\BepInEx\5.4.2350\BepInEx\core\0Harmony.dll</HintPath>
+            <HintPath>$(BEPINEX_PATH)\core\0Harmony.dll</HintPath>
         </Reference>
         <Reference Include="assembly_guiutils">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\assembly_guiutils_publicized.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\assembly_guiutils_publicized.dll</HintPath>
         </Reference>
         <Reference Include="assembly_postprocessing">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\assembly_postprocessing_publicized.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\assembly_postprocessing_publicized.dll</HintPath>
         </Reference>
         <Reference Include="assembly_utils">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\assembly_utils_publicized.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\assembly_utils_publicized.dll</HintPath>
         </Reference>
         <Reference Include="assembly_valheim">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\assembly_valheim_publicized.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\assembly_valheim_publicized.dll</HintPath>
         </Reference>
         <Reference Include="BepInEx">
-            <HintPath>$(ReferencesRoot)\BepInEx\5.4.2350\BepInEx\core\BepInEx.dll</HintPath>
+            <HintPath>$(BEPINEX_PATH)\core\BepInEx.dll</HintPath>
         </Reference>
         <Reference Include="BepInEx.Harmony">
-            <HintPath>$(ReferencesRoot)\BepInEx\5.4.2350\BepInEx\core\BepInEx.Harmony.dll</HintPath>
+            <HintPath>$(BEPINEX_PATH)\core\BepInEx.Harmony.dll</HintPath>
         </Reference>
         <Reference Include="Jotunn, Version=2.30.2.0, Culture=neutral, processorArchitecture=MSIL">
             <HintPath>..\packages\JotunnLib.2.30.2\lib\net462\Jotunn.dll</HintPath>
-        </Reference>
-        <Reference Include="Vapok.Valheim.Common, Version=2.11.2214.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>..\packages\Vapok.Valheim.Common.3.21.1015\lib\net48\Vapok.Valheim.Common.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="System" />
@@ -83,28 +83,28 @@
         <Reference Include="System.Xml" />
         <Reference Include="System.Xml.Linq" />
         <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\UnityEngine.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\UnityEngine.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\UnityEngine.AnimationModule.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\UnityEngine.AnimationModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\UnityEngine.CoreModule.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="Unity.TextMeshPro">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\Unity.TextMeshPro.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\Unity.TextMeshPro.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UI">
-            <HintPath>$(ReferencesRoot)\Valheim\1.0.15\Managed\UnityEngine.UI.dll</HintPath>
+            <HintPath>$(VALHEIM_INSTALL)\Managed\UnityEngine.UI.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
@@ -118,8 +118,10 @@
         <Compile Include="Patches\ZNet.cs" />
         <Compile Include="RPC\XPortalNetworksAdminSync.cs" />
         <Compile Include="PortalNetwork.cs" />
+        <Compile Include="PortalMapPins.cs" />
         <Compile Include="Patches\Dropdown.cs" />
         <Compile Include="Patches\Game.cs" />
+        <Compile Include="Patches\Minimap.cs" />
         <Compile Include="Patches\Piece.cs" />
         <Compile Include="Patches\TeleportWorld.cs" />
         <Compile Include="Patches\TextInput.cs" />
@@ -147,7 +149,6 @@
         <Compile Include="ZdoTools.cs" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="xportal_networks.json" />
         <None Include="app.config" />
         <None Include="packages.config" />
         <None Include="Translations\Chinese\xportal-translation-chinese.json" />
@@ -178,29 +179,27 @@
     <PropertyGroup>
         <DevPluginsFolder Condition="'$(DevPluginsFolder)' == ''">/home/vapok/Modding/Gale Profiles/Default/BepInEx/plugins</DevPluginsFolder>
     </PropertyGroup>
-    <Target Name="CopyToDev" AfterTargets="ILRepack" Condition="('$(Configuration)' == 'Debug' or '$(Configuration)' == 'Local' or '$(Configuration)' == 'Release') and Exists('$(DevPluginsFolder)')">
+    <Target Name="CopyToDev" AfterTargets="Build" Condition="('$(Configuration)' == 'Debug' or '$(Configuration)' == 'Local' or '$(Configuration)' == 'Release') and Exists('$(DevPluginsFolder)')">
         <ItemGroup>
             <DevTranslationFiles Include="$(MSBuildProjectDirectory)/Translations/**/*.*" />
         </ItemGroup>
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DevPluginsFolder)/Vapok-$(ProjectName)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(DevTranslationFiles)" DestinationFiles="@(DevTranslationFiles->'$(DevPluginsFolder)/Vapok-$(ProjectName)/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DevPluginsFolder)/$(PackageFolder)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(DevTranslationFiles)" DestinationFiles="@(DevTranslationFiles->'$(DevPluginsFolder)/$(PackageFolder)/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     </Target>
-    <Target Name="Copy" AfterTargets="ILRepack" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Target Name="Copy" AfterTargets="Build" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <ItemGroup>
             <TranslationFiles Include="$(MSBuildProjectDirectory)/Translations/**/*.*" />
             <PackageDocs Include="$(ModRoot)/$(ProjectName)/LICENSE.md;$(ModRoot)/$(ProjectName)/manifest.json;$(ModRoot)/$(ProjectName)/CHANGELOG.md;$(ModRoot)/$(ProjectName)/README.md;$(ModRoot)/$(ProjectName)/icon.png" />
         </ItemGroup>
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseRoot)/$(ProjectName)-Vapok/plugins" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(TranslationFiles)" DestinationFiles="@(TranslationFiles->'$(ReleaseRoot)/$(ProjectName)-Vapok/plugins/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(PackageDocs)" DestinationFolder="$(ReleaseRoot)/$(ProjectName)-Vapok" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ReleaseRoot)/$(PackageFolder)/plugins" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(TranslationFiles)" DestinationFiles="@(TranslationFiles->'$(ReleaseRoot)/$(PackageFolder)/plugins/Translations/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(PackageDocs)" DestinationFolder="$(ReleaseRoot)/$(PackageFolder)" SkipUnchangedFiles="true" />
     </Target>
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
         <PropertyGroup>
             <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
         </PropertyGroup>
-        <Error Condition="!Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets'))" />
         <Error Condition="!Exists('..\packages\JotunnLib.2.30.2\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.2.30.2\build\JotunnLib.props'))" />
     </Target>
-    <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets')" />
     <Import Project="..\packages\Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.3\build\Microsoft.NETFramework.ReferenceAssemblies.net48.targets" Condition="Exists('..\packages\Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.3\build\Microsoft.NETFramework.ReferenceAssemblies.net48.targets')" />
 </Project>

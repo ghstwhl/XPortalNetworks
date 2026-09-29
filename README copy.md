@@ -1,8 +1,16 @@
 <div align="center">
 
-# 🌀XPortal Networks Teams Pins
+# 🌀 XPortal Networks Teams Pins
 
 ### *Inspired by [Valpok](https://thunderstore.io/c/valheim/p/Vapok/)'s [XPortalNetwork](https://thunderstore.io/c/valheim/p/Vapok/XPortalNetworks/) and [buldosik](https://thunderstore.io/c/valheim/p/buldosik/)'s [XPortalSharedMapPins](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - an inspiration only, no code from that project is used here - this mod combines them while adding support for private Triibe portal networks! Adding a new layer of portal privacy on multiplayer servers!*
+
+[![GitHub Release](https://img.shields.io/github/v/release/ghstwhl/XPortalNetworksTribesPins?include_prereleases&logo=github&style=for-the-badge)](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases)
+[![Thunderstore Version](https://img.shields.io/thunderstore/v/NorCal_Nerds/XPortalNetworksTribesPins?logo=thunderstore&style=for-the-badge)](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/)
+<br>
+[![Discord](https://img.shields.io/badge/Discord-Join%20Community-7289da?logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/5YAJkRFBXt)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/GPL-3.0)
+
+---
 
 </div>
 
@@ -23,13 +31,22 @@
 
 ---
 
-## What's New in XPortal Networks Teams Pins
+<div align="center">
 
-XPortal Networks Teams Pins builds upon the solid foundation of the original XPortal mod by SpikeHimself, expanding it into a dedicated networking framework with extensive multiplayer features and numerous bug fixes:
+<br>
+
+[![Survival Servers](https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/main/images/survivalservers_banner.png)](https://www.survivalservers.com/services/game_servers/valheim/?ref=vapok)
+
+</div>
+
+## What's New inXPortal Networks Teams Pins
+
+XPortal Networks Teams Pins builds upon the solid foundation Vapok's XPortal Networks which builds off the original XPortal mod by SpikeHimself, expanding it into a dedicated networking framework with extensive multiplayer features and numerous bug fixes:
 
 * **Portal Networks**: Group portals into distinct networks:
   * **Global / Public Network**: Accessible to all players on the server.
   * **Player Networks & Private Portals**: Portals tied to individual players. Toggle the **Private** setting so unauthorized players cannot view or teleport through your personal portals.
+  * **Private Tribe Portal Networks**: Portals tied to a group of players, only usable by the specified players configured for that network. Portal Networks are configurable by the admin using [Official BepInEx ConfigurationManager](https://valheim.hexium.gg/mods/Azumatt/Official_BepInEx_ConfigurationManager) and changes are instantly synced to the players.
   * **Custom Named Networks**: Define up to 15 server-wide custom networks (such as *Trade Hub*, *Clan Base*, *Mining Outposts*, or *Admin Only*) via configuration, complete with real-time hot-reloading.
 * **Server Admin & Permission Controls**: Configurable permissions allowing server admins to manage networks and prevent non-owners from deconstructing portals.
 * **Portal Pins on Your Map**: Every portal you are allowed to use is pinned on your own map - the feature the *XPortal Shared Map Pins* companion mod inspired, built in as this mod's own re-implementation (an inspiration only - no code from that project is used here). Other players' private portals and restricted networks stay hidden.
@@ -166,7 +183,7 @@ Use a mod manager like **Gale** or **Thunderstore Mod Manager** to download and 
 ### Manual Installation
 1. Download the latest release `.zip` from Thunderstore or GitHub Releases.
 2. Extract the archive contents into your `Valheim/BepInEx/plugins/` directory.
-3. Ensure both client and dedicated server have XPortal Networks Teams Pinss installed for multiplayer synchronization.
+3. Ensure both client and dedicated server have XPortal Networks Teams Pins installed for multiplayer synchronization.
 
 ---
 

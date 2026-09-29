@@ -57,7 +57,7 @@ namespace XPortalNetworks.Patches
             {
                 if (portalZdo == null || portalZdo.m_uid == ZDOID.None) continue;
 
-                ZDOID previousId = portalZdo.GetZDOID(XPortalNetworks.Key_PreviousId);
+                ZDOID previousId = ZdoTools.GetPreviousId(portalZdo);
                 if (previousId != ZDOID.None)
                 {
                     portalsByPreviousId[previousId] = portalZdo;
@@ -72,7 +72,7 @@ namespace XPortalNetworks.Patches
                 string portalName = portalZdo.GetString("tag");
                 Log.Debug($"Checking connection for `{portalId}` (`{portalName}`)");
 
-                ZDOID targetId = portalZdo.GetZDOID(XPortalNetworks.Key_TargetId);
+                ZDOID targetId = ZdoTools.GetTarget(portalZdo);
 
                 if (targetId == ZDOID.None) continue;
 
@@ -98,8 +98,7 @@ namespace XPortalNetworks.Patches
                 {
                     Log.Debug($"Target `{targetId}` could not be found for portal `{portalId}` (`{portalName}`). Clearing target.");
                     portalZdo.SetOwner(ZDOMan.GetSessionID());
-                    portalZdo.SetConnection(ZDOExtraData.ConnectionType.Portal, ZDOID.None);
-                    portalZdo.Set(XPortalNetworks.Key_TargetId, ZDOID.None);
+                    ZdoTools.SetTarget(portalZdo, ZDOID.None);
                     continue;
                 }
 
@@ -108,8 +107,7 @@ namespace XPortalNetworks.Patches
                 Log.Info($"Connecting: `{portalId}` (`{portalName}`)  ==>  `{newTargetId}` (`{targetPortalName}`)");
 
                 portalZdo.SetOwner(ZDOMan.GetSessionID());
-                portalZdo.SetConnection(ZDOExtraData.ConnectionType.Portal, newTargetId);
-                portalZdo.Set(XPortalNetworks.Key_TargetId, newTargetId);
+                ZdoTools.SetTarget(portalZdo, newTargetId);
             }
 
             Log.Debug("Updating PreviousId for all portals..");
@@ -117,7 +115,7 @@ namespace XPortalNetworks.Patches
             {
                 if (portalZdo != null && portalZdo.m_uid != ZDOID.None)
                 {
-                    portalZdo.Set(XPortalNetworks.Key_PreviousId, portalZdo.m_uid);
+                    ZdoTools.SetPreviousId(portalZdo);
                 }
             }
 

@@ -15,6 +15,7 @@ namespace XPortalNetworks.Patches
                 patcher.PatchAll(typeof(Dropdown_Hide));
                 patcher.PatchAll(typeof(Dropdown_SetValue));
                 patcher.PatchAll(typeof(TextInput_RequestText));
+                patcher.PatchAll(typeof(Minimap_UpdatePins));
                 patcher.PatchAll(typeof(TeleportWorld_GetHoverText));
             }
 

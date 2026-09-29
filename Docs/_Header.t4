@@ -9,12 +9,12 @@
 <#
 	var thisModName = Mod.Info.Name;
 	var thisModVersion = Mod.Info.Version;
-	var thisModNexusId = Mod.Info.NexusId;
-	var thisModPackageName = $"{Mod.Info.Author}/{Mod.Info.Name}";
+	// There is no `thisModNexusId` / `urlThisModNexus`: this fork has no Nexus page of its own, so there is
+	// no `Mod.Info.NexusId` to build one from. The mod is published on Thunderstore and GitHub only.
+	var thisModPackageName = $"{Mod.Info.ThunderstoreTeam}/{Mod.Info.ThunderstorePackage}";
 	var thisModGitHubRepo = Mod.Info.GitHubRepo;
 	var thisModGUID = Mod.Info.GUID;
 	
-	var urlThisModNexus = $"https://www.nexusmods.com/valheim/mods/{thisModNexusId}";
 	var urlThisModThunderstore = $"https://valheim.thunderstore.io/package/{thisModPackageName}/";
 	var urlThisModGitHub = $"https://github.com/{thisModGitHubRepo}";
 

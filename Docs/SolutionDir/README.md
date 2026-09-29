@@ -1,9 +1,11 @@
-# XPortal Networks
+# XPortal Networks Teams Pins
 
-**XPortal Networks** is a Valheim mod that overhauls the vanilla portal system. Instead of being restricted to matching identical portal tags or constructing massive portal hubs, XPortal Networks lets you select any portal's destination directly from an interactive list—now featuring an expanded **Portal Networks** system with Public, Private, and Custom Named Networks!
+**XPortal Networks Teams Pins** is a Valheim mod that overhauls the vanilla portal system. Instead of being restricted to matching identical portal tags or constructing massive portal hubs, XPortal Networks Teams Pins lets you select any portal's destination directly from an interactive list—now featuring an expanded **Portal Networks** system with Public, Private, and Custom Named Networks!
+
+> Built upon [Vapok's XPortalNetworks](https://github.com/Vapok/XPortalNetworks) — that repository is the original project this one continues, and is credited in the [README](../../README.md).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vapok/XPortalNetworks/main/images/controller.gif" alt="XPortal Networks in Action" height="180" />
+  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/main/images/controller.gif" alt="XPortal Networks Teams Pins in Action" height="180" />
 </p>
 
 ---
@@ -12,15 +14,15 @@
 
 <div align="center">
 
-[![Nexus Mods](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/nexus-logo-small.png)](https://www.nexusmods.com/valheim/mods/2239) &nbsp;&nbsp;&nbsp; [![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](https://valheim.thunderstore.io/package/Vapok/XPortalNetworks/)
+[![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](https://valheim.thunderstore.io/package/NorCal_Nerds/XPortalNetworksTribesPins/)
 
 </div>
 
 ---
 
-## What's New in XPortal Networks
+## What's New in XPortal Networks Teams Pins
 
-XPortal Networks builds upon the solid foundation of the original XPortal mod by SpikeHimself, expanding it into a dedicated networking framework with extensive multiplayer features and numerous bug fixes:
+XPortal Networks Teams Pins builds upon the solid foundation of the original XPortal mod by SpikeHimself, expanding it into a dedicated networking framework with extensive multiplayer features and numerous bug fixes:
 
 * **Portal Networks**: Group portals into distinct networks:
   * **Global / Public Network**: Accessible to all players on the server.
@@ -54,7 +56,7 @@ Organize your world’s transportation:
 You can set a portal as your **Default Portal**. Newly constructed portals will immediately link to your default portal automatically, saving you time when setting up forward operating bases.
 
 ### 🏷️ Uncapped Portal Name Length
-XPortal Networks removes the vanilla character limit on portal tags, allowing you to give your portals descriptive and memorable names.
+XPortal Networks Teams Pinss removes the vanilla character limit on portal tags, allowing you to give your portals descriptive and memorable names.
 
 ### 📍 Ping Portal on Map
 Forgot where a portal leads? Click the **Ping** button to highlight the destination portal directly on your map and alert your fellow adventurers with a map ping.
@@ -63,7 +65,7 @@ Forgot where a portal leads? Click the **Ping** button to highlight the destinat
 Fully navigable using controllers with integrated on-screen key hints:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vapok/XPortalNetworks/main/images/ui-keyhints-small.png" alt="Gamepad Keyhints" />
+  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/main/images/ui-keyhints-small.png" alt="Gamepad Keyhints" />
 </p>
 
 | Button (Xbox / PlayStation) | Action |
@@ -80,11 +82,12 @@ Fully navigable using controllers with integrated on-screen key hints:
 
 * **[Jötunn, the Valheim Library](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)** (Required)
 * **[Advanced Portals](https://valheim.thunderstore.io/package/RandyKnapp/AdvancedPortals/)**: Fully integrated—displays matching colored light icons in dropdowns.
+* **[XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins)**: Inspiration for this mod's portal map pins (no code from that project is used here), built in as of v2.6.0 — remove the standalone mod, or you will see duplicate map pins.
 * **[Stone Portal](https://valheim.thunderstore.io/package/JereKuusela/Stone_Portal/)**: Supported with distinctive portal coloring.
 * **[VHVR - Valheim VR](https://valheim.thunderstore.io/package/Maynard/VHVR/)**: Compatible.
 * **[Nexus Update Check](https://valheim.thunderstore.io/package/nexusreupload/aedenthorn_Nexus_Update_Check/)**: Compatible.
 
-*Note: Incompatible with AnyPortal (XPortal Networks replaces and supersedes AnyPortal functionality).*
+*Note: Incompatible with AnyPortal (XPortal Networks Teams Pinss replaces and supersedes AnyPortal functionality).*
 
 ---
 
@@ -105,25 +108,37 @@ Fully navigable using controllers with integrated on-screen key hints:
 ## Configuration
 
 ### General & Server Settings
-The main configuration file is located at `BepInEx/config/vapok.mods.xportalnetworks.cfg`. Server-enforced settings will automatically synchronize from the server to connected clients.
+The main configuration file is located at `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`. Server-owned settings (`PingMapDisabled`, `DoublePortalCosts`, `HidePortalDistance`, `RestrictPortalRemoval`, `AdminsSeeAllNetworks` and the `Portal Networks` entries) are synchronized from the server to every connected client via Jotunn's ServerSync, and can only be changed by server admins (or the host) - including from within the game client through the ConfigurationManager window.
 
 * **`PingMapDisabled`** *(Server Enforced)*: Disables map pinging for servers playing with `nomap` or immersive navigation rules.
 * **`HidePortalDistance`** *(Server Enforced)*: Hides the meter distance displayed next to portal names in the dropdown.
 * **`DoublePortalCosts`** *(Server Enforced)*: Doubles portal crafting costs to balance the convenience of one-to-many portal routing.
 * **`RestrictPortalRemoval`** *(Server Enforced)*: Restricts deconstructing/destroying portals to the original creator or server admins.
+* **`AdminsSeeAllNetworks`** *(Server Enforced)*: When disabled (the default), server admins and the host are treated like normal players for portal networks; when enabled they can see and use every network.
+* **`Portal Network <n>` -> `Name`** *(Server Enforced)*: Display name of portal network *n* (1-15). Leave empty to keep that slot unused.
+* **`Portal Network <n>` -> `Permitted`** *(Server Enforced)*: Comma separated player ids allowed to use network *n* (e.g. `Steam_12345678901234567`). Empty allows everyone.
+* **`DefaultPrivatePortal`**: If true, newly placed portals start as private (owner-only).
+* **`Show Portal Map Pins`**: Shows the portals you are allowed to use as pins on your own map.
+* **`Show Network In Pin Name`**: Prefixes map pins with the name of the portal network, e.g. `[Trade Hub] North Base`.
 * **`DisplayPortalColour`**: Displays colored indicators matching portal types in the menu.
 
-### Custom Named Networks (`xportal_networks.json`)
-Servers can define custom networks by editing `BepInEx/config/XPortalNetworks/xportal_networks.json`. Changes to this file are automatically detected and reloaded live without needing to restart the server:
+### Custom Named Networks (config)
+Servers define custom networks (ids 1-15) in per-network sections of `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`:
 
-```json
-[
-  { "id": 1, "name": "Admin Network" },
-  { "id": 2, "name": "Trade Hub" },
-  { "id": 3, "name": "North Outposts" }
-]
+```ini
+[Portal Network 1]
+Name = Admin Network
+
+[Portal Network 2]
+Name = Trade Hub
+Permitted = Steam_12345678901234567, Steam_76543210987654321
+
+[Portal Network 3]
+Name = North Outposts
 ```
-*(Supports network IDs 1 through 15).*
+
+Leave a name empty to keep that slot unused, and leave the allow list empty to let everyone use the network.
+These entries are server-owned and synchronized by Jotunn's ServerSync, so **server admins can add, rename and restrict networks from inside the game** (ConfigurationManager -> XPortalNetworks -> Portal Networks) without touching any server files. Networks previously lived in `xportal_networks.json`; that file is imported once on upgrade, after which it is ignored and can be deleted.
 
 ---
 
@@ -134,18 +149,18 @@ Servers can define custom networks by editing `BepInEx/config/XPortalNetworks/xp
 * **[Jötunn (ValheimLib)](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)** (v2.20.0+)
 
 ### Automatic (Recommended)
-Use a mod manager like **r2modman** or **Vortex** to download and install XPortal Networks with one click.
+Use a mod manager like **Gale** or **Vortex** to download and install XPortal Networks Teams Pins with one click.
 
 ### Manual Installation
 1. Download the latest release `.zip` from Thunderstore, Nexus Mods, or GitHub Releases.
 2. Extract the archive contents into your `Valheim/BepInEx/plugins/` directory.
-3. Ensure both client and dedicated server have XPortal Networks installed.
+3. Ensure both client and dedicated server have XPortal Networks Teams Pins installed.
 
 ---
 
 ## Bugs, Feature Requests & Translations
 
-* **Bug Reports**: Please submit an issue on the [GitHub Issues](https://github.com/Vapok/XPortalNetworks/issues) page using the `Bug report` template. Please include your `LogOutput.log` file.
+* **Bug Reports**: Please submit an issue on the [GitHub Issues](https://github.com/ghstwhl/XPortalNetworksTribesPins/issues) page using the `Bug report` template. Please include your `LogOutput.log` file.
 * **Feature Requests**: Open an issue on GitHub selecting the `Feature request` template.
 * **Translations**: Contributions for new languages or localization updates are welcome via GitHub pull requests or issues.
 
@@ -153,6 +168,8 @@ Use a mod manager like **r2modman** or **Vortex** to download and install XPorta
 
 ## Credits & Acknowledgements
 
+* **[Vapok](https://github.com/Vapok)**: Author of the the expanded [**XPortalNetworks**](https://github.com/Vapok/XPortalNetworks) - the base this project is built upon and continues.
 * **[SpikeHimself](https://github.com/SpikeHimself)**: Creator of the original **XPortal** mod, upon which XPortal Networks is built and expanded.
 * **[sweetgiorni](https://valheim.thunderstore.io/package/sweetgiorni/AnyPortal/)**: Creator of the original AnyPortal concept.
+* **[buldosik](https://thunderstore.io/c/valheim/p/buldosik/)**: Author of [**XPortalSharedMapPins**](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - the standalone companion mod that inspired this mod's portal map pins (built in as of v2.6.0). Credited as an **inspiration only**: this mod contains no code from that project.
 * **Translations & Community**: Thanks to *kaiqueknup*, *makou*, *Smok3y97*, *MexExe*, *hanawa07*, *bonesbro*, *VasariRulez*, *Felix*, and *cawa-93* for original translations and community contributions.

@@ -43,6 +43,17 @@ namespace XPortalNetworks.RPC.Server
             var requesterMayChangeNetwork = requesterIsCreator || requesterIsNetworkOwner || requesterIsPrivileged;
             var requesterMayEditPrivatePortal = requesterIsCreator || requesterIsNetworkOwner || requesterIsPrivileged;
 
+            // Admins/host only bypass allow lists when the server config allows it (AdminsSeeAllNetworks).
+            var requesterBypassesNetworks = requesterIsPrivileged && CustomNetworks.AdminsBypassNetworks;
+
+            var requesterUserId = NetPeerUtility.GetPeerUserId(sender);
+            var requesterPlayerIdString = requesterPlayerId != 0L ? requesterPlayerId.ToString() : string.Empty;
+            var authoritativeNetworkId = existing != null
+                ? existing.NetworkOwnerPlayerId
+                : ZdoTools.GetNetworkOwnerPlayerId(portalZdo);
+            var currentNetworkRestricted = CustomNetworks.IsReservedIdRange(authoritativeNetworkId)
+                && !CustomNetworks.IsPlayerAllowed(authoritativeNetworkId, requesterUserId, requesterPlayerIdString, requesterBypassesNetworks);
+
             if (!requesterMayChangeNetwork)
             {
                 var authoritativeNetwork = existing != null
@@ -120,6 +131,27 @@ namespace XPortalNetworks.RPC.Server
                 }
             }
 
+            var requestedNetworkRestricted = CustomNetworks.IsReservedIdRange(portal.NetworkOwnerPlayerId)
+                && !CustomNetworks.IsPlayerAllowed(portal.NetworkOwnerPlayerId, requesterUserId, requesterPlayerIdString, requesterBypassesNetworks);
+
+            // Tribe networks ("allow_list") are server-authoritative: a player who is not on the network's
+            // allow list may not view, edit, or move portals on that network.
+            if (!requesterBypassesNetworks && existing != null && currentNetworkRestricted)
+            {
+                portal.Name = existing.Name;
+                portal.Target = existing.Target;
+                portal.IsPrivate = existing.IsPrivate;
+                portal.NetworkOwnerPlayerId = existing.NetworkOwnerPlayerId;
+                portal.NetworkOwnerDisplayName = existing.NetworkOwnerDisplayName ?? string.Empty;
+            }
+            else if (!requesterBypassesNetworks && requestedNetworkRestricted)
+            {
+                portal.NetworkOwnerPlayerId = authoritativeNetworkId;
+                portal.NetworkOwnerDisplayName = existing != null
+                    ? (existing.NetworkOwnerDisplayName ?? string.Empty)
+                    : (ZdoTools.GetNetworkOwnerDisplayName(portalZdo) ?? string.Empty);
+            }
+
             if (portal.IsPrivate)
             {
                 if (portal.NetworkOwnerPlayerId == 0L)
@@ -144,6 +176,16 @@ namespace XPortalNetworks.RPC.Server
                 {
                     portal.Target = existing != null ? existing.Target : ZDOID.None;
                 }
+            }
+
+            // Do not allow linking to a portal that sits on a tribe network the requester cannot access.
+            if (portal.HasTarget()
+                && !requesterBypassesNetworks
+                && KnownPortalsManager.Instance.TryGetValue(portal.Target, out var destNetworkValidation)
+                && CustomNetworks.IsReservedIdRange(destNetworkValidation.NetworkOwnerPlayerId)
+                && !CustomNetworks.IsPlayerAllowed(destNetworkValidation.NetworkOwnerPlayerId, requesterUserId, requesterPlayerIdString, false))
+            {
+                portal.Target = existing != null ? existing.Target : ZDOID.None;
             }
 
             var updatedPortal = KnownPortalsManager.Instance.AddOrUpdate(portal);
@@ -202,31 +244,6 @@ namespace XPortalNetworks.RPC.Server
 
                 SendToClient.Resync(KnownPortalsManager.Instance.Pack(), "A portal was removed");
             }
-        }
-
-        internal static void RPC_ConfigRequest(long sender)
-        {
-            if (!Environment.IsServer)
-            {
-                Log.Error($"{sender} wants to receive the config, {ERR_NOTSERVER}");
-                return;
-            }
-
-            Log.Debug($"{sender} wants to receive the config");
-            ZPackage pkg = XPortalNetworksConfig.Instance.PackLocalConfig();
-            SendToClient.Config(sender, pkg);
-        }
-
-        internal static void RPC_RequestCustomNetworks(long sender)
-        {
-            if (!Environment.IsServer)
-            {
-                Log.Error($"{sender} wants custom networks, but I am not the server!");
-                return;
-            }
-
-            Log.Debug($"{sender} wants custom networks");
-            SendToClient.CustomNetworks(sender, CustomNetworks.PackForServer());
         }
 
         internal static void RPC_RequestAdminSync(long sender, ZPackage _)
