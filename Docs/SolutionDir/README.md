@@ -14,9 +14,12 @@
 
 <div align="center">
 
-[![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](https://valheim.thunderstore.io/package/NorCal_Nerds/XPortalNetworksTribesPins/)
+[![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/)
 
 </div>
+
+* **[Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/)** — install with a mod manager (Gale, r2modman, Thunderstore Mod Manager), or download the `.zip` manually.
+* **[GitHub Releases](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases)** — the latest and previous `.zip` builds.
 
 ---
 
@@ -138,7 +141,7 @@ Name = North Outposts
 ```
 
 Leave a name empty to keep that slot unused, and leave the allow list empty to let everyone use the network.
-These entries are server-owned and synchronized by Jotunn's ServerSync, so **server admins can add, rename and restrict networks from inside the game** (ConfigurationManager -> XPortalNetworks -> Portal Networks) without touching any server files. Networks previously lived in `xportal_networks.json`; that file is imported once on upgrade, after which it is ignored and can be deleted.
+These entries are server-owned and synchronized by Jotunn's ServerSync, so **server admins can add, rename and restrict networks from inside the game** (ConfigurationManager -> XPortalNetworksTribesPins -> Portal Networks) without touching any server files. Networks previously lived in `xportal_networks.json`; that file is imported once on upgrade, after which it is ignored and can be deleted.
 
 ---
 
@@ -149,10 +152,10 @@ These entries are server-owned and synchronized by Jotunn's ServerSync, so **ser
 * **[Jötunn (ValheimLib)](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)** (v2.20.0+)
 
 ### Automatic (Recommended)
-Use a mod manager like **Gale** or **Vortex** to download and install XPortal Networks Tribes Pins with one click.
+Use a mod manager like **Gale**, **r2modman** or the **Thunderstore Mod Manager**, or install straight from [Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/) with one click.
 
 ### Manual Installation
-1. Download the latest release `.zip` from Thunderstore, Nexus Mods, or GitHub Releases.
+1. Download the latest release `.zip` from [Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/) or [GitHub Releases](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases).
 2. Extract the archive contents into your `Valheim/BepInEx/plugins/` directory.
 3. Ensure both client and dedicated server have XPortal Networks Tribes Pins installed.
 
@@ -169,7 +172,7 @@ Use a mod manager like **Gale** or **Vortex** to download and install XPortal Ne
 ## Credits & Acknowledgements
 
 * **[Vapok](https://github.com/Vapok)**: Author of the expanded [**XPortalNetworks**](https://github.com/Vapok/XPortalNetworks) - the base this project is built upon and continues.
-* **[SpikeHimself](https://github.com/SpikeHimself)**: Creator of the original **XPortal** mod, upon which XPortal Networks is built and expanded.
+* **[SpikeHimself](https://github.com/SpikeHimself)**: Creator of the original **XPortal** mod, upon which XPortal Networks Tribes Pins is built and expanded.
 * **[sweetgiorni](https://valheim.thunderstore.io/package/sweetgiorni/AnyPortal/)**: Creator of the original AnyPortal concept.
 * **[buldosik](https://thunderstore.io/c/valheim/p/buldosik/)**: Author of [**XPortalSharedMapPins**](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - the standalone companion mod that inspired this mod's portal map pins (built in as of v2.6.0). Credited as an **inspiration only**: this mod contains no code from that project.
 * **Translations & Community**: Thanks to *kaiqueknup*, *makou*, *Smok3y97*, *MexExe*, *hanawa07*, *bonesbro*, *VasariRulez*, *Felix*, and *cawa-93* for original translations and community contributions.

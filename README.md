@@ -8,7 +8,7 @@
 
 <p align="center">
   <b>Portal Configuration UI</b><br />
-  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/refs/heads/main/images/XPortal%20Networks%20Window.png" alt="XPortal Configuration UI" height="240" />
+  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/refs/heads/main/images/XPortal%20Networks%20Window.png" alt="XPortal Networks Tribes Pins Configuration UI" height="240" />
 </p>
 
 <p align="center">
@@ -20,6 +20,13 @@
   <b>Destination Network Selection</b><br />
   <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/refs/heads/main/images/Destination%20Portals%20with%20Private.png" alt="Destination Network Selection" height="180" />
 </p>
+
+---
+
+## Where to Download
+
+* **[Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/)** — install with a mod manager (Gale, r2modman, Thunderstore Mod Manager), or download the `.zip` manually.
+* **[GitHub Releases](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases)** — the latest and previous `.zip` builds.
 
 ---
 
@@ -90,12 +97,6 @@ Fully navigable using controllers with integrated on-screen key hints:
 
 * **[Jötunn, the Valheim Library](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)** (Required)
 * **[AdventureBackpacks](https://valheim.thunderstore.io/package/Vapok/AdventureBackpacks/)**: Fully Supported (Teleportation restrictions in equipped backpacks are strictly enforced).
-* **[Fast Item Transfer](https://valheim.thunderstore.io/package/Vapok/FastItemTransfer/)**: Fully Supported.
-* **[Advanced Portals](https://valheim.thunderstore.io/package/RandyKnapp/AdvancedPortals/)**: Fully integrated—displays matching colored light icons in dropdowns.
-* **[Stone Portal](https://valheim.thunderstore.io/package/JereKuusela/Stone_Portal/)**: Supported with distinctive portal coloring.
-* **[VHVR - Valheim VR](https://valheim.thunderstore.io/package/Maynard/VHVR/)**: Compatible.
-* **[Nexus Update Check](https://valheim.thunderstore.io/package/nexusreupload/aedenthorn_Nexus_Update_Check/)**: Compatible.
-* **[XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins)**: Inspiration for this mod's portal map pins (no code from that project is used here), built in as of v2.6.0 — remove the standalone mod, or you will see duplicate map pins.
 
 *Note: Incompatible with AnyPortal (XPortal Networks Tribes Pins replaces and supersedes AnyPortal functionality).*
 
@@ -150,7 +151,7 @@ Name = North Outposts
 ```
 
 Leave a name empty to keep that slot unused, and leave the allow list empty to let everyone use the network.
-These entries are server-owned and synchronized by Jotunn's ServerSync, so **server admins can add, rename and restrict networks from inside the game** (ConfigurationManager -> XPortalNetworks -> Portal Networks) without touching any server files. Networks previously lived in `xportal_networks.json`; that file is imported once on upgrade, after which it is ignored and can be deleted.
+These entries are server-owned and synchronized by Jotunn's ServerSync, so **server admins can add, rename and restrict networks from inside the game** (ConfigurationManager -> XPortalNetworksTribesPins -> Portal Networks) without touching any server files. Networks previously lived in `xportal_networks.json`; that file is imported once on upgrade, after which it is ignored and can be deleted.
 
 ---
 
@@ -161,10 +162,19 @@ These entries are server-owned and synchronized by Jotunn's ServerSync, so **ser
 * **[Jötunn (ValheimLib)](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)** (v2.20.0+)
 
 ### Automatic (Recommended)
-Use a mod manager like **Gale** or **Thunderstore Mod Manager** to download and install XPortal Networks Tribes Pins with one click.
+Use a mod manager like **Gale** or **Thunderstore Mod Manager**, or install straight from [Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/) with one click.
+
+### Mod-manager Installation (Automatic)
+1. Open [XPortalNetworksTribesPins on Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/), or search for `XPortalNetworksTribesPins` in **Gale** / **r2modman** / **Thunderstore Mod Manager**.
+2. Click **Install with Mod Manager**.
+
+### Mod-manager Installation (Latest)
+1. Download the latest release `.zip` from [GitHub Releases](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases).
+2. Using the **Gale** mod manager, use `Import->local mod` to import the downloaded .zip file.
+
 
 ### Manual Installation
-1. Download the latest release `.zip` from Thunderstore or GitHub Releases.
+1. Download the latest release `.zip` from [Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/) or [GitHub Releases](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases).
 2. Extract the archive contents into your `Valheim/BepInEx/plugins/` directory.
 3. Ensure both client and dedicated server have XPortal Networks Tribes Pins installed for multiplayer synchronization.
 
@@ -181,7 +191,7 @@ Use a mod manager like **Gale** or **Thunderstore Mod Manager** to download and 
 ## Credits & Acknowledgements
 
 * **[Vapok](https://github.com/Vapok)**: Author of the expanded [**XPortalNetworks**](https://github.com/Vapok/XPortalNetworks) - the base this project is built upon and continues.
-* **[SpikeHimself](https://github.com/SpikeHimself)**: Creator of the original **XPortal** mod, upon which XPortal Networks is built and expanded.
+* **[SpikeHimself](https://github.com/SpikeHimself)**: Creator of the original **XPortal** mod, upon which XPortal Networks Tribes Pins is built and expanded.
 * **[sweetgiorni](https://valheim.thunderstore.io/package/sweetgiorni/AnyPortal/)**: Creator of the original AnyPortal concept.
 * **[buldosik](https://thunderstore.io/c/valheim/p/buldosik/)**: Author of [**XPortalSharedMapPins**](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - the standalone companion mod that inspired this mod's portal map pins (built in as of v2.6.0). Credited as an **inspiration only**: this mod contains no code from that project.
 * **Translations & Community**: Thanks to *kaiqueknup*, *makou*, *Smok3y97*, *MexExe*, *hanawa07*, *bonesbro*, *VasariRulez*, *Felix*, and *cawa-93* for original translations and community contributions.

@@ -2,7 +2,7 @@
 <#@ output extension=".md" #>
 ---
 name: Feature request
-about: Suggest an idea for <#= thisModName #>
+about: Suggest an idea for <#= thisModHumanName #>
 title: ''
 labels: enhancement
 assignees: ''

@@ -1,6 +1,6 @@
-# XPortalNetworks — Repository Instructions
+# XPortalNetworksTribesPins — Repository Instructions
 
-This is a Valheim BepInEx mod (`XPortalNetworks`). Keep the mod version in sync with
+This is a Valheim BepInEx mod (`XPortalNetworksTribesPins`). Keep the mod version in sync with
 every change.
 
 ## Builds (required)
