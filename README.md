@@ -2,7 +2,7 @@
 
 # 🌀XPortal Networks Teams Pins
 
-### *Inspired by [Valpok](https://thunderstore.io/c/valheim/p/Vapok/)'s [XPortalNetwork](https://thunderstore.io/c/valheim/p/Vapok/XPortalNetworks/) and [buldosik](https://thunderstore.io/c/valheim/p/buldosik/)'s [XPortalSharedMapPins](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/) - an inspiration only, no code from that project is used here - this mod combines them while adding support for private Triibe portal networks! Adding a new layer of portal privacy on multiplayer servers!*
+### *This is a re-woprk of [Valpok](https://thunderstore.io/c/valheim/p/Vapok/)'s [XPortalNetwork](https://thunderstore.io/c/valheim/p/Vapok/XPortalNetworks/) with map pin features inspired by [buldosik](https://thunderstore.io/c/valheim/p/buldosik/)'s [XPortalSharedMapPins](https://thunderstore.io/c/valheim/p/buldosik/XPortalSharedMapPins/). This mod combines the features of both while adding support for private Triibe portal networks! Adding a new layer of portal privacy on multiplayer servers!*
 
 </div>
 
