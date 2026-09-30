@@ -48,7 +48,7 @@ namespace XPortalNetworks.Patches
             }
 
             var config = XPortalNetworksConfig.Instance.Local;
-            if (!config.RestrictPortalRemoval && !config.RestrictPortalRemovalToUsable)
+            if (!config.RestrictPortalRemovalToCreator && !config.RestrictPortalRemovalToUsable)
             {
                 return;
             }
@@ -57,33 +57,42 @@ namespace XPortalNetworks.Patches
         }
 
         /// <summary>
-        /// Portal hammer-removal rules. A player may remove a portal they created
-        /// (<see cref="XPortalNetworksConfig.ConfigSettings.RestrictPortalRemoval"/>) or one they are
-        /// allowed to use (<see cref="XPortalNetworksConfig.ConfigSettings.RestrictPortalRemovalToUsable"/>).
-        /// Server admins, the host and portal-network admins may always remove portals. Only called when at
-        /// least one of the two restrictions is enabled.
+        /// Portal hammer-removal rules. Each enabled restriction has to be satisfied:
+        /// <see cref="XPortalNetworksConfig.ConfigSettings.RestrictPortalRemovalToCreator"/> requires the player to
+        /// have placed the portal (or to be privileged), and
+        /// <see cref="XPortalNetworksConfig.ConfigSettings.RestrictPortalRemovalToUsable"/> requires the portal
+        /// to be one they are allowed to use. With both enabled - the default - a player may only remove a
+        /// portal they placed <b>and</b> may still use, so enabling an extra restriction never loosens the
+        /// other one. Only called when at least one of the two is enabled.
         ///
-        /// NOTE: the server/owner runs this method too - <c>WearNTear.UpdateWear</c> consults
-        /// <c>WearNTear.CanBeRemoved()</c> to decide whether environmental wear may destroy a piece - so the
-        /// privileged short-circuit below is required, not just a convenience.
+        /// Privileged players (the host, server admins and portal-network admins) are only above the
+        /// portal-network rules while the server allows it (<c>AdminsSeeAllNetworks</c>) - the same gate
+        /// <see cref="CustomNetworks.IsLocalPlayerAllowed"/> applies. Without it the host could hammer a
+        /// portal it is not allowed to use while being unable to open it.
+        ///
+        /// NOTE: <c>WearNTear.UpdateWear</c> also reaches this rule, through <c>WearNTear.CanBeRemoved()</c>.
+        /// <see cref="WearNTear_CanBeRemoved"/> keeps the wear simulation out of it, so unlike before no
+        /// unconditional server-side short-circuit is needed here.
         /// </summary>
         static bool CanRemovePortal(Piece piece)
         {
             if (piece == null)
                 return false;
 
-            if (ZNet.instance != null && (ZNet.instance.LocalPlayerIsAdminOrHost() || XPortalNetworksAdminSync.IsLocalPortalNetworkAdmin()))
-                return true;
-
             var config = XPortalNetworksConfig.Instance.Local;
 
-            if (config.RestrictPortalRemoval && piece.IsCreator())
-                return true;
+            if (config.RestrictPortalRemovalToCreator
+                && !piece.IsCreator()
+                && !CustomNetworks.IsLocalPlayerNetworkPrivileged())
+            {
+                return false;
+            }
 
-            if (config.RestrictPortalRemovalToUsable && IsUsableByLocalPlayer(piece))
-                return true;
+            // IsLocalPlayerAllowed folds in the same gated privilege.
+            if (config.RestrictPortalRemovalToUsable && !IsUsableByLocalPlayer(piece))
+                return false;
 
-            return false;
+            return true;
         }
 
         /// <summary>

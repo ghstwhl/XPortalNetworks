@@ -111,13 +111,13 @@ This configuration option exists to save your personal Default Portal. Its value
 
 If true, newly placed portals start as private (owner-only). If false, they start public on the Global network until changed.
 
-[font=Courier New][b]'RestrictPortalRemoval'[/b][/font]
+[font=Courier New][b]'RestrictPortalRemovalToCreator'[/b][/font]
 
-Restricts removing a portal with the hammer to the player who placed it, or to server admins. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
+Restricts removing a portal with the hammer to the player who placed it - or to a server admin while [font=Courier New][b]'AdminsSeeAllNetworks'[/b][/font] lets admins bypass portal networks. Enabled by default. When [font=Courier New][b]'RestrictPortalRemovalToUsable'[/b][/font] is also enabled, both rules have to be satisfied. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
 
 [font=Courier New][b]'RestrictPortalRemovalToUsable'[/b][/font]
 
-When enabled, a player may only remove a portal with the hammer if they are allowed to use it: portals on the Global network, portals on unrestricted networks, portals on networks they are a member of, and their own private portals. It works alongside [font=Courier New][b]'RestrictPortalRemoval'[/b][/font] - with both enabled, having placed the portal is enough. Server admins and the host may always remove portals. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
+When enabled, a player may only remove a portal with the hammer if they are allowed to use it: portals on the Global network, portals on unrestricted networks, portals on networks they are a member of, and their own private portals. Admins and the host are treated like normal players here unless [font=Courier New][b]'AdminsSeeAllNetworks'[/b][/font] lets them bypass portal networks. Enabled by default. When [font=Courier New][b]'RestrictPortalRemovalToCreator'[/b][/font] is also enabled, both rules have to be satisfied - a player may then only remove a portal they placed and may still use. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
 
 [font=Courier New][b]'AdminsSeeAllNetworks'[/b][/font]
 

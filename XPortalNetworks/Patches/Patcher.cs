@@ -30,6 +30,7 @@ namespace XPortalNetworks.Patches
             patcher.PatchAll(typeof(ZDOMan_ConnectPortals));
             patcher.PatchAll(typeof(ZNet_RPC_PeerInfo_Postfix));
             patcher.PatchAll(typeof(WearNTear_OnPlaced));
+            patcher.PatchAll(typeof(WearNTear_CanBeRemoved));
         }
 
         public static void Unpatch() => patcher?.UnpatchSelf();

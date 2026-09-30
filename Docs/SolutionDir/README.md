@@ -111,13 +111,13 @@ Fully navigable using controllers with integrated on-screen key hints:
 ## Configuration
 
 ### General & Server Settings
-The main configuration file is located at `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`. Server-owned settings (`PingMapDisabled`, `DoublePortalCosts`, `HidePortalDistance`, `RestrictPortalRemoval`, `RestrictPortalRemovalToUsable`, `AdminsSeeAllNetworks` and the `Portal Networks` entries) are synchronized from the server to every connected client via Jotunn's ServerSync, and can only be changed by server admins (or the host) - including from within the game client through the ConfigurationManager window.
+The main configuration file is located at `BepInEx/config/ghostwheel.mods.xportalnetworkstribespins.cfg`. Server-owned settings (`PingMapDisabled`, `DoublePortalCosts`, `HidePortalDistance`, `RestrictPortalRemovalToCreator`, `RestrictPortalRemovalToUsable`, `AdminsSeeAllNetworks` and the `Portal Networks` entries) are synchronized from the server to every connected client via Jotunn's ServerSync, and can only be changed by server admins (or the host) - including from within the game client through the ConfigurationManager window.
 
 * **`PingMapDisabled`** *(Server Enforced)*: Disables map pinging for servers playing with `nomap` or immersive navigation rules.
 * **`HidePortalDistance`** *(Server Enforced)*: Hides the meter distance displayed next to portal names in the dropdown.
 * **`DoublePortalCosts`** *(Server Enforced)*: Doubles portal crafting costs to balance the convenience of one-to-many portal routing.
-* **`RestrictPortalRemoval`** *(Server Enforced)*: Restricts deconstructing/destroying portals to the original creator or server admins.
-* **`RestrictPortalRemovalToUsable`** *(Server Enforced)*: Lets a player deconstruct a portal only if they are allowed to use it: Global network, an unrestricted network, a network they are a member of, or their own private portal. Combines with `RestrictPortalRemoval`; admins and the host may always deconstruct.
+* **`RestrictPortalRemovalToCreator`** *(Server Enforced)*: Restricts deconstructing/destroying portals to the original creator, or to server admins while `AdminsSeeAllNetworks` is enabled. **On by default.**
+* **`RestrictPortalRemovalToUsable`** *(Server Enforced)*: Lets a player deconstruct a portal only if they are allowed to use it: Global network, an unrestricted network, a network they are a member of, or their own private portal. Admins and the host are treated like normal players unless `AdminsSeeAllNetworks` is enabled. **On by default**; with `RestrictPortalRemovalToCreator` also on, both rules must hold.
 * **`AdminsSeeAllNetworks`** *(Server Enforced)*: When disabled (the default), server admins and the host are treated like normal players for portal networks; when enabled they can see and use every network.
 * **`Portal Network <n>` -> `Name`** *(Server Enforced)*: Display name of portal network *n* (1-15). Leave empty to keep that slot unused.
 * **`Portal Network <n>` -> `Permitted`** *(Server Enforced)*: Comma separated player ids allowed to use network *n* (e.g. `Steam_12345678901234567`). Empty allows everyone.

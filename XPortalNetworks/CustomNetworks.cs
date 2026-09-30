@@ -322,7 +322,7 @@ namespace XPortalNetworks
         /// True when the local player may bypass allow-list restrictions: they are a server
         /// admin/host AND the server config allows admins to see all networks.
         /// </summary>
-        private static bool IsLocalPlayerNetworkPrivileged()
+        internal static bool IsLocalPlayerNetworkPrivileged()
         {
             return AdminsBypassNetworks && XPortalNetworksAdminSync.IsLocalPortalNetworkAdmin();
         }
