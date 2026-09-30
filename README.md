@@ -7,18 +7,8 @@
 </div>
 
 <p align="center">
-  <b>Portal Configuration UI</b><br />
-  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/refs/heads/main/images/XPortal%20Networks%20Window.png" alt="XPortal Networks Tribes Pins Configuration UI" height="240" />
-</p>
-
-<p align="center">
-  <b>Network Selection Window</b><br />
-  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/refs/heads/main/images/Portal%20Network%20Window.png" alt="Network Selection Window" height="180" />
-</p>
-
-<p align="center">
-  <b>Destination Network Selection</b><br />
-  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/refs/heads/main/images/Destination%20Portals%20with%20Private.png" alt="Destination Network Selection" height="180" />
+  <b>Opposing Tribe Views</b><br />
+  <img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/refs/heads/main/images/split-tribe-view.png" alt="Opposing Tribe Views" height="240" />
 </p>
 
 ---

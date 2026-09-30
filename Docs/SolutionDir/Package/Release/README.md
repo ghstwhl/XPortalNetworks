@@ -48,7 +48,7 @@ XPortal Networks Tribes Pins has been built with multiplayer support at its core
 
 The XPortal Networks Tribes Pins UI will respond to gamepad input when configuring your portal. As of v1.2.10 it even shows you the gamepad keyhints!
 
-<img src="https://raw.githubusercontent.com/SpikeHimself/XPortal/main/images/ui-keyhints-small.png" />
+<img src="https://raw.githubusercontent.com/ghstwhl/XPortalNetworksTribesPins/main/images/ui-keyhints-small.png" />
 
 The controls are as follows:
 
@@ -70,8 +70,6 @@ XPortal Networks Tribes Pins has been made fully compatible with the following m
 * [XPortal Shared Map Pins](https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins) by buldosik (built in since v2.6.0 as an inspiration only - no code from that project is used here; remove the standalone mod to avoid duplicate map pins)
 
 Furthermore, XPortal Networks Tribes Pins has a configuration option to fully integrate with [Advanced Portals](https://valheim.thunderstore.io/package/RandyKnapp/AdvancedPortals/). If you set `DisplayPortalColour` to `True`, each portal in XPortal Networks Tribes Pins's dropdown list will be prepended by a ">>" tag that has the same colour as the light that the portal emits. As of v1.2.10, Stone Portals also get their own colour!
-
-<img src="https://raw.githubusercontent.com/SpikeHimself/XPortal/main/images/advancedportals-small.png" />
 
 XPortal Networks Tribes Pins is known to be fully incompatible with:
 

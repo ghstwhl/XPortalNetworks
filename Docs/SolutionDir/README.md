@@ -12,12 +12,6 @@
 
 ## Where to Download
 
-<div align="center">
-
-[![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/)
-
-</div>
-
 * **[Thunderstore](https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/)** — install with a mod manager (Gale, r2modman, Thunderstore Mod Manager), or download the `.zip` manually.
 * **[GitHub Releases](https://github.com/ghstwhl/XPortalNetworksTribesPins/releases)** — the latest and previous `.zip` builds.
 

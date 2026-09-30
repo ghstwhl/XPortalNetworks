@@ -1,3 +1,16 @@
+# 3.1.1 - Documentation Presentation & Asset Cleanup
+The docs now show the mod with a single hero screenshot, and every image they hot-link lives in this repository. The images nothing referenced any more are gone with them.
+* **One hero screenshot instead of three (`README.md`)**
+  * The three stacked UI screenshots - "Portal Configuration UI", "Network Selection Window" and "Destination Network Selection" - are replaced by a single "Opposing Tribe Views" image, `images/split-tribe-view.png`. They were three separate windows of the same feature, and the README reads better with one picture that shows it in use on both sides of a network restriction.
+* **No image is hot-linked from another repository (`README.md`, `Docs/Modules/20Features.t4`, `Docs/Modules/11HeaderGitHub.t4`, `Docs/SolutionDir/README.md` and the tracked mirrors)**
+  * Two images were being served out of repositories belonging to someone else: the Advanced Portals illustration in the generated docs (from `SpikeHimself/XPortal`) and the Thunderstore badge on the store README (from `SpikeHimself/resources`). Both are gone - the Advanced Portals paragraph simply ends where its picture was, and "Where to Download" keeps its existing Thunderstore bullet, which is what the badge linked to anyway.
+  * The keyhints screenshot in the generated docs points at this repository's own `images/ui-keyhints-small.png`, which was already committed here, instead of another project's copy of the same image.
+  * This is about images, not links: the credits, the original mod, Jotunn, BepInEx, Advanced Portals and the Nexus pages are all still linked exactly as they were, and the GitHub profile avatar next to the Vapok Gaming credit is untouched.
+* **Images nothing references any more are deleted (`images/`)**
+  * 15 files, about 2.1 MB: the three superseded UI screenshots, both Advanced Portals illustrations, the retired Nexus "buy me a coffee" and Survival Servers banners, and the older single-shot UI images (`configuration.png`, `defaultportal.png`, `dropdown.png`, `hover.png`, `pingmapdisabled.png`, `showonmap.png`, `ui-keyhints.png`, `connect-explore-header.jpeg`, `xportal networks icon.jpeg`).
+  * What is left is what the docs actually use: `controller.gif`, `icon.png`, `ui-keyhints-small.png`, and the new `split-tribe-view.png` hero image.
+* Docs and repository assets only: no code, config or behaviour change.
+
 # 3.1.0 - Usable-Portal Removal Restriction
 * **`RestrictPortalRemovalToCreator` - the existing rule, renamed and now on by default (`XPortalNetworksConfig.cs`, `Patches/Piece.cs`)**
   * On its own it restricts removing a portal with the hammer to the player who placed it. That is its whole rule: it never looks at portal networks, and it only ever affects the hammer - other removal such as structural damage is unaffected.
