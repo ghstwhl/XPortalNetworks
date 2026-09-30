@@ -386,3 +386,4 @@ FodyWeavers.xsd
 
 # tools/: cached clone/build of AssemblyPublicizer
 tools/.cache/
+.vscode/settings.json

@@ -1,6 +1,6 @@
 # References
 
-External sources used while developing, fixing and documenting **XPortalNetworks** (a Valheim
+External sources used while developing, fixing and documenting **XPortal Networks Tribes Pins** (a Valheim
 BepInEx mod). Everything listed is a third-party artifact or publication; none of it is
 distributed with this repository.
 
@@ -101,7 +101,7 @@ The ConfigurationManager implementation was read from its **source** (fetched 20
   > Entries. Only relevant for Config Entries that have the
   > `ConfigurationManagerAttributes.IsAdminOnly` applied."
 
-  This is why the plugin uses `[SynchronizationMode(AdminOnlyStrictness.Always)]`: XPortalNetworks
+  This is why the plugin uses `[SynchronizationMode(AdminOnlyStrictness.Always)]`: XPortalNetworksTribesPins
   is `EveryoneMustHaveMod`, so it is always present on the server and the `Always` caveat cannot apply.
 
 ## 3. Build and analysis tooling
@@ -149,12 +149,6 @@ packaging rules followed here:
 
 | Item | As referenced in this repo |
 |---|---|
-| **Advanced Portals** (RandyKnapp) | Integration described in the `DisplayPortalColour` config option |
-| **Stone Portal** | Integration described alongside `DisplayPortalColour` |
-| **AnyPortal** | Declared incompatible via `[BepInIncompatibility("com.sweetgiorni.anyportal")]` |
-| **ValheimCommunityPatch** (MidnightMods) | Compatibility notice in `CHANGELOG.md` (<https://thunderstore.io/c/valheim/p/MidnightMods/ValheimCommunityPatch/>) |
-| **XPortal Shared Map Pins** (buldosik) — <https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins> | Inspiration for the 2.6.0 portal map-pin feature - **inspiration only: no code from that project is used in this repository** (its source was read 2026-09-29 as a behavioural reference). The standalone companion mod (built against XPortalNetworks 2.0.8, GUID `buldosik.XPortalSharedMapPins`, hard dependency `vapok.mods.xportalnetworks` - the upstream GUID, which 3.0.0 stopped using: this fork registers as `ghostwheel.mods.xportalnetworkstribespins`) was re-implemented as [`PortalMapPins.cs`](XPortalNetworks/PortalMapPins.cs) — so it must **not** be installed alongside 2.6.0+, or the map gets duplicate pins |
-| **Nexus Update Check** (aedenthorn) — <https://www.nexusmods.com/valheim/mods/102> | **Removed in 3.0.1**: `Mod.Info.NexusId` and the `General/NexusID` config key are gone, because this fork has no Nexus page of its own — the ID they carried (`3719`) was the upstream mod's listing, so the key only ever pointed that update checker at a page that is not this mod. BepInEx ignores the retired key in an existing config file. Install surfaces are Thunderstore and GitHub only; the third-party Nexus links in the docs (Jötunn, Vortex, Advanced Portals, ...) are unrelated and unaffected |
 | **Thunderstore / BepInExPack_Valheim** | Distribution target; BepInEx core source — the pack `denikson-BepInExPack_Valheim-5.4.2350` is built from the `v5-lts` branch of <https://github.com/AzumattDev/BepInEx> (see §2) |
 
 ## 7. Source-availability notes
@@ -211,7 +205,10 @@ Recorded for transparency about where each fact came from:
   worlds and configurations keep working. The Nexus reference that 2.6.0-3.0.0 carried (ID 3719, the
   upstream mod's page) is dropped in 3.0.1: the fork has no Nexus upload, so the mod declares no Nexus ID
   and its badges/install steps name Thunderstore and GitHub only. This project's own home is
-  <https://github.com/ghstwhl/XPortalNetworksTribesPins>.
+  <https://github.com/ghstwhl/XPortalNetworksTribesPins>, it is published on Thunderstore at
+  <https://thunderstore.io/c/valheim/p/NorCal_Nerds/XPortalNetworksTribesPins/> (team/package
+  `NorCal_Nerds/XPortalNetworksTribesPins`), and its `.zip` builds live on
+  <https://github.com/ghstwhl/XPortalNetworksTribesPins/releases>.
 - **XPortal Shared Map Pins** by **buldosik** —
   <https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins> — is the inspiration for the
   map-pin feature added in 2.6.0, and is credited as an **inspiration only**: no code from that project is
@@ -222,6 +219,6 @@ Recorded for transparency about where each fact came from:
 - **BepInEx**, **HarmonyX**, **Jötunn**, **Mono.Cecil** and **AssemblyPublicizer** each remain under
   their own upstream licences; see the respective links in §2 and §3 for terms. **Vapok.Valheim.Common**
   and **ILRepack** were used up to 2.6.0 and are no longer referenced, merged or distributed as of 3.0.0.
-- Note the caveat carried by `tools/New-ValheimRefs.ps1`: XPortalNetworks is **not affiliated**
+- Note the caveat carried by `tools/New-ValheimRefs.ps1`: XPortal Networks Tribes Pins is **not affiliated**
   with AssemblyPublicizer, and only assemblies you are legally entitled to work with should be
   publicized.

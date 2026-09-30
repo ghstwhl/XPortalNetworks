@@ -2,7 +2,7 @@
 
 <#= mf.Heading("Select a destination", size: HeadingSize.Small) #>
 
-When interacting with a portal, instead of entering a tag which has to match another portal's, <#= thisModName #> lets you choose the portal's destination from a list.
+When interacting with a portal, instead of entering a tag which has to match another portal's, <#= thisModHumanName #> lets you choose the portal's destination from a list.
 For your convenience, this list also shows you how far away the portals are.
 
 <#= mf.Heading("Default destination", size: HeadingSize.Small) #>
@@ -11,27 +11,27 @@ A Portal can be marked as the "Default Portal". When a Default Portal has been s
 
 <#= mf.Heading("Longer names", size: HeadingSize.Small) #>
 
-<#= thisModName #> completely removes the character length restriction on portal names, so that you can give your portals clear and descriptive titles.
+<#= thisModHumanName #> completely removes the character length restriction on portal names, so that you can give your portals clear and descriptive titles.
 
 <#= mf.Heading("Ping a portal location", size: HeadingSize.Small) #>
 
-Forgot where you put your portal? You don't need to teleport to it to find out. Just click the Ping button next to the list, and <#= thisModName #> will show the selected portal on your map, while also pinging its location to all players on the server.
+Forgot where you put your portal? You don't need to teleport to it to find out. Just click the Ping button next to the list, and <#= thisModHumanName #> will show the selected portal on your map, while also pinging its location to all players on the server.
 
 If you prefer to play without a map, this button can be hidden, either by using the <#= mf.Code("nomap") #> global key, or by setting <#= mf.Code("PingMapDisabled") #> to <#= mf.Code("True") #>.
 
 <#= mf.Heading("Portals on your map", size: HeadingSize.Small) #>
 
-<#= thisModName #> can pin every portal you are allowed to use onto your own map - this is the feature the standalone <#= mf.Link("XPortal Shared Map Pins", "https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins") #> mod inspired, built right in as this mod's own re-implementation (an inspiration only - no code from that project is used here). Portals on the Global network, portals on tribe networks you are a member of, and your own private portals are pinned automatically; other players' private portals and restricted networks are not, so the map never reveals portals you cannot use.
+<#= thisModHumanName #> can pin every portal you are allowed to use onto your own map - this is the feature the standalone <#= mf.Link("XPortal Shared Map Pins", "https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins") #> mod inspired, built right in as this mod's own re-implementation (an inspiration only - no code from that project is used here). Portals on the Global network, portals on tribe networks you are a member of, and your own private portals are pinned automatically; other players' private portals and restricted networks are not, so the map never reveals portals you cannot use.
 
 The pins are local to your client - nothing is written to the world and nothing is sent to other players - and they follow renamed, moved and destroyed portals. Use <#= mf.Code("Show Portal Map Pins") #> to turn them off, and <#= mf.Code("Show Network In Pin Name") #> to prefix each pin with the network it belongs to (for example "[Trade Hub] North Base").
 
 <#= mf.Heading("Multiplayer", size: HeadingSize.Small) #>
 
-<#= thisModName #> has been built with multiplayer support at its core. All players must run the same version of <#= thisModName #>. If you play on a dedicated server, that too needs to have same version of <#= thisModName #> installed.
+<#= thisModHumanName #> has been built with multiplayer support at its core. All players must run the same version of <#= thisModHumanName #>. If you play on a dedicated server, that too needs to have same version of <#= thisModHumanName #> installed.
 
 <#= mf.Heading("Gamepad support", size: HeadingSize.Small) #>
 
-The <#= thisModName #> UI will respond to gamepad input when configuring your portal. As of v1.2.10 it even shows you the gamepad keyhints!
+The <#= thisModHumanName #> UI will respond to gamepad input when configuring your portal. As of v1.2.10 it even shows you the gamepad keyhints!
 
 <#= mf.Image("https://raw.githubusercontent.com/SpikeHimself/XPortal/main/images/ui-keyhints-small.png") #>
 
@@ -49,7 +49,7 @@ mf.List(ListBullets.Asterisk, items: new string[] {
 
 <#= mf.Heading("Mod compatibility and integration", size: HeadingSize.Small) #>
 
-<#= thisModName #> has been made fully compatible with the following mods:
+<#= thisModHumanName #> has been made fully compatible with the following mods:
 
 <#= 
 mf.List(ListBullets.Asterisk, items: new string[] {
@@ -60,11 +60,11 @@ mf.List(ListBullets.Asterisk, items: new string[] {
 	$"{mf.Link(\"XPortal Shared Map Pins\", \"https://github.com/buldosik/valheim-mods/tree/master/XPortalSharedMapPins\")} by buldosik (built in since v2.6.0 as an inspiration only - no code from that project is used here; remove the standalone mod to avoid duplicate map pins)"
 })
 #>
-Furthermore, <#= thisModName #> has a configuration option to fully integrate with <#= linkAdvancedPortals #>. If you set <#= mf.Code("DisplayPortalColour") #> to <#= mf.Code("True") #>, each portal in <#= thisModName #>'s dropdown list will be prepended by a ">>" tag that has the same colour as the light that the portal emits. As of v1.2.10, Stone Portals also get their own colour!
+Furthermore, <#= thisModHumanName #> has a configuration option to fully integrate with <#= linkAdvancedPortals #>. If you set <#= mf.Code("DisplayPortalColour") #> to <#= mf.Code("True") #>, each portal in <#= thisModHumanName #>'s dropdown list will be prepended by a ">>" tag that has the same colour as the light that the portal emits. As of v1.2.10, Stone Portals also get their own colour!
 
 <#= mf.Image("https://raw.githubusercontent.com/SpikeHimself/XPortal/main/images/advancedportals-small.png") #>
 
-<#= thisModName #> is known to be fully incompatible with:
+<#= thisModHumanName #> is known to be fully incompatible with:
 
 <#= 
 mf.List(ListBullets.Asterisk, items: new string[] {

@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for XPortal
+about: Suggest an idea for XPortal Networks Tribes Pins
 title: ''
 labels: enhancement
 assignees: ''

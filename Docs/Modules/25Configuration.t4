@@ -1,6 +1,6 @@
 <#= mf.Heading("Configuration") #>
 
-<#= thisModName #>'s config file, which can be found at <#= mf.Code($"Valheim\\BepInEx\\config\\{thisModGUID}.cfg") #>, contains the following settings:
+<#= thisModHumanName #>'s config file, which can be found at <#= mf.Code($"Valheim\\BepInEx\\config\\{thisModGUID}.cfg") #>, contains the following settings:
 
 <#= mf.Code("PingMapDisabled") #>
 
@@ -12,7 +12,7 @@ Show a coloured ">>" tag in the list of portals to indicate the portal type (int
 
 <#= mf.Code("DoublePortalCosts") #>
 
-Since <#= thisModName #> is essentially a cheat, in that you only need half the amount of portals now, this setting allows you to compensate for that by doubling portal costs. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
+Since <#= thisModHumanName #> is essentially a cheat, in that you only need half the amount of portals now, this setting allows you to compensate for that by doubling portal costs. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
 
 <#= mf.Code("HidePortalDistance") #>
 
@@ -26,9 +26,13 @@ This configuration option exists to save your personal Default Portal. Its value
 
 If true, newly placed portals start as private (owner-only). If false, they start public on the Global network until changed.
 
-<#= mf.Code("RestrictPortalRemoval") #>
+<#= mf.Code("RestrictPortalRemovalToCreator") #>
 
-Restricts removing a portal with the hammer to the player who placed it, or to server admins. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
+Restricts removing a portal with the hammer to the player who placed it - or to a server admin while <#= mf.Code("AdminsSeeAllNetworks") #> lets admins bypass portal networks. Enabled by default. When <#= mf.Code("RestrictPortalRemovalToUsable") #> is also enabled, both rules have to be satisfied. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
+
+<#= mf.Code("RestrictPortalRemovalToUsable") #>
+
+When enabled, a player may only remove a portal with the hammer if they are allowed to use it: portals on the Global network, portals on unrestricted networks, portals on networks they are a member of, and their own private portals. Admins and the host are treated like normal players here unless <#= mf.Code("AdminsSeeAllNetworks") #> lets them bypass portal networks. Enabled by default. When <#= mf.Code("RestrictPortalRemovalToCreator") #> is also enabled, both rules have to be satisfied - a player may then only remove a portal they placed and may still use. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
 
 <#= mf.Code("AdminsSeeAllNetworks") #>
 

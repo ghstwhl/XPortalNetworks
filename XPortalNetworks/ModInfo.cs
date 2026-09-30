@@ -18,6 +18,11 @@ namespace Mod
         // looked for in) that this mod used before 3.0.0. Existing world saves still carry those keys, so
         // they are read as a fallback and kept in sync - see ZdoTools. Never reintroduce it as a plugin Name.
         public const string LegacyName = "XPortalNetworks";
+        // The human-readable product name. `Name` above is the technical identity (plugin name, ZDO key
+        // prefix, Thunderstore/GitHub package name) and stays glued to `ghostwheel.mods.xportalnetworkstribespins`;
+        // `HumanName` is what prose should call the mod - README descriptions, the generated store docs and
+        // the issue templates. Never use it for ZDO keys, RPC names, URLs, manifests or file names.
+        public const string HumanName = "XPortal Networks Tribes Pins";
         // This project's own repository. The original mod it is built upon lives at
         // https://github.com/Vapok/XPortalNetworks and is credited in README.md and REFERENCES.md.
         public const string GitHubRepo = "ghstwhl/XPortalNetworksTribesPins";
@@ -25,7 +30,7 @@ namespace Mod
         // These drive the generated install links and the build's package staging folder.
         public const string ThunderstoreTeam = "NorCal_Nerds";
         public const string ThunderstorePackage = "XPortalNetworksTribesPins";
-        public const string Version = "3.0.2";
+        public const string Version = "3.1.0";
         public const string Description = "Select portal destination from a list of existing portals with custom networks with private portal and tribe restrictions. No more tag pairing, and no more portal hubs!  Also manages map pins for the portals a player is allowed to use.";
         public const string WebsiteUrl = "https://github.com/" + GitHubRepo;
         public const int NexusId = 4092;

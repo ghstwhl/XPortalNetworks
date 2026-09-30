@@ -39,8 +39,10 @@ namespace XPortalNetworks
             public ConfigEntry<Vector3> DefaultPortal;
             public ConfigEntry<bool> DefaultPrivatePortal;
             public bool HidePortalDistance;
-            /// <summary>Server-enforced portal hammer removal rules.</summary>
-            public bool RestrictPortalRemoval;
+            /// <summary>Server-enforced: only the portal's creator may remove it with the hammer.</summary>
+            public bool RestrictPortalRemovalToCreator;
+            /// <summary>Server-enforced: a player may only remove a portal they are allowed to use.</summary>
+            public bool RestrictPortalRemovalToUsable;
             /// <summary>Server-enforced: when true, server admins/host bypass portal-network allow lists.</summary>
             public bool AdminsSeeAllNetworks;
 
@@ -189,15 +191,33 @@ namespace XPortalNetworks
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
             Local.HidePortalDistance = cfgHidePortalDistance.Value;
 
-            var cfgRestrictPortalRemoval = configFile.Bind(
+            // `RestrictPortalRemoval` was renamed to `RestrictPortalRemovalToCreator`; carry an existing
+            // value over instead of letting the server silently fall back to the new default.
+            var renamedRemovalToCreator = MigrateRenamedBool("General", "RestrictPortalRemoval", "RestrictPortalRemovalToCreator");
+            if (renamedRemovalToCreator.HasValue)
+            {
+                Log.Info($"Renamed the `General/RestrictPortalRemoval` setting to `General/RestrictPortalRemovalToCreator` (value {renamedRemovalToCreator.Value}). The old key is no longer read and can be deleted.");
+            }
+
+            var cfgRestrictPortalRemovalToCreator = configFile.Bind(
                 "General",
-                "RestrictPortalRemoval",
-                false,
+                "RestrictPortalRemovalToCreator",
+                renamedRemovalToCreator ?? true,
                 new ConfigDescription(
-                    "When true, only the player who placed the portal or a server admin may remove it with the hammer. Other removal (e.g. structural damage) is unchanged." + Desc_EnforcedByServer,
+                    "When true, only the player who placed the portal may remove it with the hammer - or a server admin/host while AdminsSeeAllNetworks lets admins bypass portal networks. When RestrictPortalRemovalToUsable is also enabled, both rules have to be satisfied. Other removal (e.g. structural damage) is unchanged." + Desc_EnforcedByServer,
                     null,
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
-            Local.RestrictPortalRemoval = cfgRestrictPortalRemoval.Value;
+            Local.RestrictPortalRemovalToCreator = cfgRestrictPortalRemovalToCreator.Value;
+
+            var cfgRestrictPortalRemovalToUsable = configFile.Bind(
+                "General",
+                "RestrictPortalRemovalToUsable",
+                true,
+                new ConfigDescription(
+                    "When true, a player may only remove a portal with the hammer if they are allowed to use it: portals on the Global network, on an unrestricted network, or on a network they are a member of, plus their own private portals. Admins and the host are treated like normal players here unless AdminsSeeAllNetworks lets them bypass portal networks. When RestrictPortalRemovalToCreator is also enabled, both rules have to be satisfied - a player may then only remove a portal they placed and may still use. Other removal (e.g. structural damage) is unchanged." + Desc_EnforcedByServer,
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+            Local.RestrictPortalRemovalToUsable = cfgRestrictPortalRemovalToUsable.Value;
 
             var cfgAdminsSeeAllNetworks = configFile.Bind(
                 "General",
@@ -253,6 +273,76 @@ namespace XPortalNetworks
                 false,
                 new ConfigDescription("If enabled, the map pin of a portal is prefixed with the name of the portal network it is on, for example \"[Trade Hub] North Base\". This is a local preference.",
                     null, new ConfigurationManagerAttributes { Order = 1 }));
+        }
+
+        /// <summary>
+        /// Carries a renamed boolean setting over to its new key. Call this <b>before</b> binding the new
+        /// key: once BepInEx has written it, the file no longer tells us whether the old one was ever set.
+        /// Returns the old value when the new key is still absent and the old one holds a boolean, and
+        /// <c>null</c> when there is nothing to carry over (so the caller's own default applies). The old
+        /// key stays in the file as an inert entry - it is no longer bound, so BepInEx ignores it and it
+        /// does not appear in the ConfigurationManager UI.
+        /// </summary>
+        private bool? MigrateRenamedBool(string section, string oldKey, string newKey)
+        {
+            var path = configFile?.ConfigFilePath;
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            {
+                return null;
+            }
+
+            try
+            {
+                var inSection = false;
+                bool? oldValue = null;
+
+                foreach (var rawLine in File.ReadAllLines(path))
+                {
+                    var line = rawLine.Trim();
+                    if (line.Length == 0 || line[0] == '#')
+                    {
+                        continue;
+                    }
+
+                    if (line[0] == '[')
+                    {
+                        inSection = line.Equals("[" + section + "]", StringComparison.OrdinalIgnoreCase);
+                        continue;
+                    }
+
+                    if (!inSection)
+                    {
+                        continue;
+                    }
+
+                    var separator = line.IndexOf('=');
+                    if (separator <= 0)
+                    {
+                        continue;
+                    }
+
+                    var key = line.Substring(0, separator).Trim();
+                    var value = line.Substring(separator + 1).Trim();
+
+                    if (key.Equals(newKey, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Already bound at least once - the value in the file is authoritative.
+                        return null;
+                    }
+
+                    if (key.Equals(oldKey, StringComparison.OrdinalIgnoreCase) && bool.TryParse(value, out var parsed))
+                    {
+                        oldValue = parsed;
+                    }
+                }
+
+                return oldValue;
+            }
+            catch (Exception ex)
+            {
+                Log.Warning($"Could not read the renamed `{section}/{oldKey}` setting from the config file: {ex.Message}");
+                return null;
+            }
         }
 
         /// <summary>

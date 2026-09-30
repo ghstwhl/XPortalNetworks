@@ -1,4 +1,4 @@
-<#= mf.Heading(thisModName) #>
+<#= mf.Heading(thisModHumanName) #>
 
 An <#= linkAnyPortal #> revamp.
 
@@ -7,6 +7,6 @@ An <#= linkAnyPortal #> revamp.
 
 <#= mf.Heading("Description") #>
 
-<#= thisModName #> lets you select a portal destination from a list of existing portals. 
+<#= thisModHumanName #> lets you select a portal destination from a list of existing portals. 
 
 No more tag pairing, and no more portal hubs!

@@ -1,6 +1,6 @@
 ---
 name: Translation
-about: Submit a translation for XPortal
+about: Submit a translation for XPortal Networks Tribes Pins
 title: Translation
 labels: translation
 assignees: ''
@@ -10,11 +10,11 @@ assignees: ''
 
 # 1: Introduction
 
-XPortal changes how portals work in Valheim. This means that XPortal also changes the terminology that is used.
+XPortal Networks Tribes Pins changes how portals work in Valheim. This means that XPortal Networks Tribes Pins also changes the terminology that is used.
 
 **Name**
 
-XPortal gives portals a "name" instead of a "tag". Please do not use your language's equivalent of the word "tag".
+XPortal Networks Tribes Pins gives portals a "name" instead of a "tag". Please do not use your language's equivalent of the word "tag".
 
 **Destination**
 
@@ -22,7 +22,7 @@ The portal on the other side is a "destination". Please do not use the word "tar
 
 **Configure**
 
-When a user opens the XPortal window to change the name and destination of a portal, this is called "configuring the portal". Please try to find an equivalent of the word "Configure". Do not use "Manage" or "Edit".
+When a user opens the XPortal Networks Tribes Pins window to change the name and destination of a portal, this is called "configuring the portal". Please try to find an equivalent of the word "Configure". Do not use "Manage" or "Edit".
 
 
 # 2: Questions
@@ -44,5 +44,5 @@ Please use the English name as it is used on this page:  https://valheim-modding
 4: Target: "Destination",
 5: Target 'none': "(None)",
 6: Name 'no name': "(No name)",
-7: XPortal UI header title: "Hail, traveller!",
+7: XPortal Networks Tribes Pins UI header title: "Hail, traveller!",
 8: Default portal: "Default portal"

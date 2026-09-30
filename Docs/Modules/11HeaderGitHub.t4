@@ -1,6 +1,6 @@
-<#= mf.Heading(thisModName) #>
+<#= mf.Heading(thisModHumanName) #>
 
-<#= thisModName #> is a Valheim mod that lets you select a portal's destination from a list. 
+<#= thisModHumanName #> is a Valheim mod that lets you select a portal's destination from a list. 
 
 <#= mf.Image($"https://raw.githubusercontent.com/{thisModGitHubRepo}/main/images/controller.gif", height: 180) #>
 
@@ -16,3 +16,5 @@
 &nbsp;
 
 </div>
+
+Or download the latest release from the [GitHub releases page](<#= urlThisModGitHubReleases #>).

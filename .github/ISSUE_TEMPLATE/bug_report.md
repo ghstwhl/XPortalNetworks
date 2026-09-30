@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help XPortal improve
+about: Create a report to help XPortal Networks Tribes Pins improve
 title: ''
 labels: bug
 assignees: ''
@@ -21,7 +21,7 @@ Please have `Debug` output enabled. Attach the file called `LogOutput.log` which
 If you play on a server, include the server's `LogOutput.log` as well.
 
 **Version**
-Which version of XPortal are you experiencing your problem with?
+Which version of XPortal Networks Tribes Pins are you experiencing your problem with?
 
 **Environment**
 Choose from the following options where you are experiencing the problem (leave only the ones you know about):
@@ -35,10 +35,10 @@ Do you experience the issue also when you do not have any other mods installed? 
 
 **Priority**
 Estimate how important this problem is. Choose Medium if you don't know.
-* Critical (my world is suffering permanent damage from XPortal)
-* High (XPortal does not work at all anymore)
-* Medium (XPortal kind of still works, but it's not pleasant to use)
-* Low (XPortal is still working fine, but sometimes a thing goes wrong)
+* Critical (my world is suffering permanent damage from XPortal Networks Tribes Pins)
+* High (XPortal Networks Tribes Pins does not work at all anymore)
+* Medium (XPortal Networks Tribes Pins kind of still works, but it's not pleasant to use)
+* Low (XPortal Networks Tribes Pins is still working fine, but sometimes a thing goes wrong)
 
 **Additional information**
 Add any addtional information here. Anything that you think might help is appreciated.

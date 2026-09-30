@@ -8,6 +8,9 @@
 <#@ import namespace="ManyFormats.Formats" #>
 <#
 	var thisModName = Mod.Info.Name;
+	// Human-readable product name: use this for prose, and keep `thisModName` for anything technical
+	// (URLs, manifests, ZDO/RPC names, file names).
+	var thisModHumanName = Mod.Info.HumanName;
 	var thisModVersion = Mod.Info.Version;
 	// There is no `thisModNexusId` / `urlThisModNexus`: this fork has no Nexus page of its own, so there is
 	// no `Mod.Info.NexusId` to build one from. The mod is published on Thunderstore and GitHub only.
@@ -15,7 +18,7 @@
 	var thisModGitHubRepo = Mod.Info.GitHubRepo;
 	var thisModGUID = Mod.Info.GUID;
 	
-	var urlThisModThunderstore = $"https://valheim.thunderstore.io/package/{thisModPackageName}/";
+	var urlThisModThunderstore = $"https://thunderstore.io/c/valheim/p/{thisModPackageName}/";
 	var urlThisModGitHub = $"https://github.com/{thisModGitHubRepo}";
 
 	var urlThisModGitHubReleases = $"{urlThisModGitHub}/releases";
