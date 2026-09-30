@@ -5,16 +5,5 @@
 <#= mf.Image($"https://raw.githubusercontent.com/{thisModGitHubRepo}/main/images/controller.gif", height: 180) #>
 
 <#= mf.Heading("Where to download") #>
-(click the image!)
 
-<div align="center">
-
-&nbsp;
-
-[![Thunderstore](https://raw.githubusercontent.com/SpikeHimself/resources/main/images/thirdparty/thunderstore-logo-small.png)](<#= urlThisModThunderstore #>)
-
-&nbsp;
-
-</div>
-
-Or download the latest release from the [GitHub releases page](<#= urlThisModGitHubReleases #>).
+Install from <#= mf.Link("Thunderstore", urlThisModThunderstore) #>, or download the latest release from the <#= mf.Link("GitHub releases page", urlThisModGitHubReleases) #>.

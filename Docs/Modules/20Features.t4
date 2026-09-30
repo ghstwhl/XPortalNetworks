@@ -33,7 +33,7 @@ The pins are local to your client - nothing is written to the world and nothing 
 
 The <#= thisModHumanName #> UI will respond to gamepad input when configuring your portal. As of v1.2.10 it even shows you the gamepad keyhints!
 
-<#= mf.Image("https://raw.githubusercontent.com/SpikeHimself/XPortal/main/images/ui-keyhints-small.png") #>
+<#= mf.Image($"https://raw.githubusercontent.com/{thisModGitHubRepo}/main/images/ui-keyhints-small.png") #>
 
 The controls are as follows:
 
@@ -61,8 +61,6 @@ mf.List(ListBullets.Asterisk, items: new string[] {
 })
 #>
 Furthermore, <#= thisModHumanName #> has a configuration option to fully integrate with <#= linkAdvancedPortals #>. If you set <#= mf.Code("DisplayPortalColour") #> to <#= mf.Code("True") #>, each portal in <#= thisModHumanName #>'s dropdown list will be prepended by a ">>" tag that has the same colour as the light that the portal emits. As of v1.2.10, Stone Portals also get their own colour!
-
-<#= mf.Image("https://raw.githubusercontent.com/SpikeHimself/XPortal/main/images/advancedportals-small.png") #>
 
 <#= thisModHumanName #> is known to be fully incompatible with:
 
