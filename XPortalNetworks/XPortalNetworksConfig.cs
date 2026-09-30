@@ -41,6 +41,8 @@ namespace XPortalNetworks
             public bool HidePortalDistance;
             /// <summary>Server-enforced portal hammer removal rules.</summary>
             public bool RestrictPortalRemoval;
+            /// <summary>Server-enforced: a player may only remove a portal they are allowed to use.</summary>
+            public bool RestrictPortalRemovalToUsable;
             /// <summary>Server-enforced: when true, server admins/host bypass portal-network allow lists.</summary>
             public bool AdminsSeeAllNetworks;
 
@@ -198,6 +200,16 @@ namespace XPortalNetworks
                     null,
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
             Local.RestrictPortalRemoval = cfgRestrictPortalRemoval.Value;
+
+            var cfgRestrictPortalRemovalToUsable = configFile.Bind(
+                "General",
+                "RestrictPortalRemovalToUsable",
+                false,
+                new ConfigDescription(
+                    "When true, a player may only remove a portal with the hammer if they are allowed to use it: portals on the Global network, on an unrestricted network, or on a network they are a member of, plus their own private portals. Works alongside RestrictPortalRemoval - with both enabled, being the portal's creator is enough. Server admins and the host may always remove portals. Other removal (e.g. structural damage) is unchanged." + Desc_EnforcedByServer,
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+            Local.RestrictPortalRemovalToUsable = cfgRestrictPortalRemovalToUsable.Value;
 
             var cfgAdminsSeeAllNetworks = configFile.Bind(
                 "General",

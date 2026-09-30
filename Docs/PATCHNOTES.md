@@ -1,3 +1,15 @@
+# 3.1.0 - Usable-Portal Removal Restriction
+* **New server setting: `RestrictPortalRemovalToUsable` (`XPortalNetworksConfig.cs`, `Patches/Piece.cs`)**
+  * When enabled, a player may only deconstruct a portal with the hammer if they are allowed to use it, reusing the rule that already gates the portal configuration panel (`XPortalNetworks.OnPortalRequestText`): the portal's **own** network must be the Global network, an unrestricted network, or a network the player is a member of, and a **private** portal may only be removed by its owner (its creator, or the player a personal network belongs to).
+  * The portal's own network and privacy are used, never its destination's - so a portal that can be opened and configured can also be removed, and one that shows the "restricted network" message cannot.
+  * `RestrictPortalRemoval` (creator only) is unchanged, and the two settings combine: with both enabled, having placed the portal **or** being allowed to use it is enough. Server admins, the host and portal-network admins may always remove portals, and neither setting affects other removal such as structural damage.
+  * The setting is server-owned (`IsAdminOnly` plus the shared "owned by the server" description), so it is synchronized to every client and can only be changed by server admins - including in game through ConfigurationManager.
+* **Implementation notes (`Patches/Piece.cs`)**
+  * The rule extends the existing `Piece.CanBeRemoved` postfix. Vanilla calls that method from exactly two places - `Player.RemovePiece` (the hammer) and `WearNTear.UpdateWear`, where the piece's owner decides whether environmental wear may destroy it - so the privileged short-circuit (`ZNet.LocalPlayerIsAdminOrHost()`, which is `true` on any server, the host included) has to stay: the wear simulation must never be restricted by a client-side permission rule, or portals would silently become immune to wear damage.
+  * Portal network membership and privacy are read from the portal's own ZDO through the existing helpers (`CustomNetworks.IsLocalPlayerAllowed`, `ZdoTools.GetNetworkOwnerPlayerId`, `ZdoTools.GetIsPrivate`, `ZDOVars.s_creator`), so no new data has to be stored anywhere.
+  * Removal stays client-driven: vanilla's `WearNTear.RPC_Remove` runs on the ZDO owner and performs no permission check, so this - like `RestrictPortalRemoval` before it - is a gameplay rule, not an anti-cheat guarantee.
+* **Docs**: documented in `Docs/Modules/25Configuration.t4` and its tracked mirrors (`Docs/README.Nexus.bbcode`, `Docs/SolutionDir/Package/Release/README.md`), and in both hand-maintained READMEs.
+
 # 3.0.4 - Live Store Links
 The mod is now published, so the docs point at the real listings instead of the "not currently available" placeholder.
 * **Live locations linked (`README.md`, `Docs/SolutionDir/README.md`, `REFERENCES.md`)**

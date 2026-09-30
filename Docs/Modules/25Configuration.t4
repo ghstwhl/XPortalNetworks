@@ -30,6 +30,10 @@ If true, newly placed portals start as private (owner-only). If false, they star
 
 Restricts removing a portal with the hammer to the player who placed it, or to server admins. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
 
+<#= mf.Code("RestrictPortalRemovalToUsable") #>
+
+When enabled, a player may only remove a portal with the hammer if they are allowed to use it: portals on the Global network, portals on unrestricted networks, portals on networks they are a member of, and their own private portals. It works alongside <#= mf.Code("RestrictPortalRemoval") #> - with both enabled, having placed the portal is enough. Server admins and the host may always remove portals. Other removal (such as structural damage) is unaffected. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
+
 <#= mf.Code("AdminsSeeAllNetworks") #>
 
 When disabled (the default), server admins and the host are treated like normal players and only see and use unrestricted portal networks, or networks they are members of. When enabled, they can see and use every network. This setting is owned by the server: it is synchronized to all clients and can only be changed by server admins.
